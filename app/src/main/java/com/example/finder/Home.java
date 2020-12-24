@@ -46,6 +46,10 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         startActivity(new Intent(getApplicationContext(), Maletas.class));
     }
 
+    public void modoNotificacion(View view) {
+        startActivity(new Intent(getApplicationContext(), Modo.class));
+    }
+
     public void Salir(View view) {
         moveTaskToBack(true);
         android.os.Process.killProcess(android.os.Process.myPid());
