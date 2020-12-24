@@ -28,7 +28,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:onClick="mostrarMaletas"
-            android:text="Ver Mis Maletas" />
+            android:text="Ver Mis Maletas"
+            app:backgroundTint="@android:color/holo_blue_dark" />
 
         <TextView
             android:id="@+id/txt_texto"
@@ -38,17 +39,10 @@
             android:text="Elija un dispositivo activo:"
             android:textSize="18sp" />
 
-        <ListView
-            android:id="@+id/lv_disp"
+        <Spinner
+            android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="181dp" />
-
-        <TextView
-            android:id="@+id/txt_texto2"
-            android:layout_width="match_parent"
-            android:layout_height="79dp"
-            android:gravity="center"
-            android:textSize="16sp" />
+            android:layout_height="46dp" />
 
         <Button
             android:id="@+id/btn_salir"
@@ -56,6 +50,7 @@
             android:layout_height="52dp"
             android:gravity="center"
             android:onClick="Salir"
-            android:text="SALIR" />
+            android:text="SALIR"
+            app:backgroundTint="@android:color/holo_blue_dark" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

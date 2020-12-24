@@ -8,14 +8,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    private TextView tv1;
-    private ListView lv1;
-
-    private String dispositivos[] = {"Dispositivo 1", "Dispositivo 2", "Dispositivo 3", "Dispositivo 4"};
+    private String dispositivos[] = {" ","Dispositivo 1", "Dispositivo 2", "Dispositivo 3", "Dispositivo 4"};
     private String bateria [] = {"81%", "25%", "32%", "73%"};
 
     @Override
@@ -23,18 +22,24 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        tv1 = (TextView)findViewById(R.id.txt_texto2);
-        lv1 = (ListView)findViewById(R.id.lv_disp);
+        Spinner Valores= findViewById(R.id.spinner);
+        Valores.setOnItemSelectedListener(this);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_bateria, dispositivos);
-        lv1.setAdapter(adapter);
+        ArrayAdapter items= new ArrayAdapter(this, android.R.layout.simple_spinner_item,dispositivos);
+        items.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Valores.setAdapter(items);
+    }
 
-        lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                tv1.setText("Porcentaje de batería del "+  lv1.getItemAtPosition(i)+ " es " + bateria[i] );
-            }
-        });
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        if (i>0) {
+            Toast.makeText(this,"La batería del " + adapterView.getSelectedItem().toString() + " es " + bateria[i-1],Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
     public void mostrarMaletas(View view) {

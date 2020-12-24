@@ -19,9 +19,12 @@
         android:id="@+id/txt_"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:fontFamily="cursive"
         android:gravity="center"
         android:text="¡Bienvenido a Finder!"
-        android:textSize="24sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="45sp"
+        android:textStyle="bold"
         tools:text="¡Bienvenido a Finder!" />
 
     <Button
@@ -29,9 +32,10 @@
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:onClick="iniciarSesion"
         android:layout_gravity="center"
+        android:fontFamily="sans-serif-black"
+        android:onClick="iniciarSesion"
         android:text="Iniciar sesion"
-        app:backgroundTint="@color/teal_700" />
+        app:backgroundTint="@android:color/holo_blue_dark" />
 
 </LinearLayout>
