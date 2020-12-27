@@ -56,11 +56,11 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
     public void modoNotificacion(View view) {
         final CharSequence[] items= {"Notificaciones","Mensajes SMS"};
         AlertDialog.Builder alertaNotificaciones= new AlertDialog.Builder(this);
-        alertaNotificaciones.setTitle("Elija una opcion:");
+        alertaNotificaciones.setTitle("Elija una opción:");
         alertaNotificaciones.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast mensaje= Toast.makeText(getApplicationContext(),"Opcion seleccionada: "+ items[i],Toast.LENGTH_LONG);
+                Toast mensaje= Toast.makeText(getApplicationContext(),"Opción seleccionada: "+ items[i],Toast.LENGTH_LONG);
                 mensaje.show();
 
                 if (i==1){
