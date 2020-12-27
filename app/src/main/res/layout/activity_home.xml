@@ -34,12 +34,12 @@
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="31dp" />
+            android:layout_height="9dp" />
 
         <TextView
             android:id="@+id/txt_texto"
             android:layout_width="215dp"
-            android:layout_height="55dp"
+            android:layout_height="38dp"
             android:gravity="center"
             android:text="Elija un dispositivo activo:"
             android:textSize="18sp" />
@@ -50,10 +50,11 @@
             android:layout_height="46dp" />
 
         <Button
-            android:id="@+id/ModoNotificacion"
+            android:id="@+id/btn_modo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="modoNotificacion"
+            android:gravity="center"
             android:text="Modo Notificación"
             app:backgroundTint="@android:color/holo_blue_dark" />
 
@@ -64,11 +65,12 @@
 
         <Button
             android:id="@+id/btn_salir"
-            android:layout_width="match_parent"
+            android:layout_width="249dp"
             android:layout_height="45dp"
+            android:layout_gravity="center"
             android:gravity="center"
             android:onClick="Salir"
             android:text="SALIR"
-            app:backgroundTint="@android:color/holo_blue_dark" />
+            app:backgroundTint="@android:color/holo_red_light" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
