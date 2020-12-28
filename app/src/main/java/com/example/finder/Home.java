@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -53,10 +54,11 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         startActivity(new Intent(getApplicationContext(), Maletas.class));
     }
 
-    public void modoNotificacion(View view) {
+    public void modo(View view) {
         final CharSequence[] items= {"Notificaciones","Mensajes SMS"};
         AlertDialog.Builder alertaNotificaciones= new AlertDialog.Builder(this);
-        alertaNotificaciones.setTitle("Elija una opción:");
+        alertaNotificaciones.setTitle(Html.fromHtml("<font color= '#00BCD4'>"+"Elija una opción:"+"</font>"));
+
         alertaNotificaciones.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

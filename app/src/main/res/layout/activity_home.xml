@@ -53,7 +53,7 @@
             android:id="@+id/btn_modo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="modoNotificacion"
+            android:onClick="modo"
             android:gravity="center"
             android:text="Modo Notificación"
             app:backgroundTint="@android:color/holo_blue_dark" />
