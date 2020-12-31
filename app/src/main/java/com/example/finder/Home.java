@@ -79,7 +79,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
     }
 
     public void Salir(View view) {
-        System.exit(0);
+        System.exit(1);
     }
 
 }

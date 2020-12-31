@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
-            android:layout_height="189dp"
+            android:layout_height="181dp"
             app:srcCompat="@drawable/bolsoazul" />
 
         <TextView
@@ -52,7 +52,7 @@
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="294dp"
-            android:layout_height="46dp"
+            android:layout_height="43dp"
             android:layout_gravity="center" />
 
         <Button
@@ -68,7 +68,7 @@
         <TextView
             android:id="@+id/txt_vacio"
             android:layout_width="match_parent"
-            android:layout_height="27dp" />
+            android:layout_height="17dp" />
 
         <Button
             android:id="@+id/btn_salir"

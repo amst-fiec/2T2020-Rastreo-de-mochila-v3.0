@@ -20,7 +20,7 @@
         <TextView
             android:id="@+id/txt_modoEstatico"
             android:layout_width="match_parent"
-            android:layout_height="81dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="cursive"
             android:gravity="center"
@@ -36,7 +36,7 @@
         <ImageView
             android:id="@+id/img_puntero"
             android:layout_width="match_parent"
-            android:layout_height="179dp"
+            android:layout_height="112dp"
             app:srcCompat="@drawable/puntero" />
 
         <TextView
@@ -47,7 +47,7 @@
         <Button
             android:id="@+id/btn_duracion"
             android:layout_width="280dp"
-            android:layout_height="59dp"
+            android:layout_height="47dp"
             android:layout_gravity="center"
             android:onClick="aggTiempo"
             android:text="Duración Máxima"
@@ -58,10 +58,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <ToggleButton
+            android:id="@+id/tg_SMS"
+            android:layout_width="280dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:background="@android:color/holo_blue_dark"
+            android:textColor="@color/white"
+            android:textOff="Activar SMS"
+            android:textOn="Desactivar SMS" />
+
+        <TextView
+            android:id="@+id/txt_nada6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/btn_cambio"
             android:layout_width="280dp"
-            android:layout_height="58dp"
+            android:layout_height="47dp"
             android:layout_gravity="center"
             android:onClick="cambiarModo"
             android:text="Cambiar modo"
@@ -75,7 +90,7 @@
         <Button
             android:id="@+id/btn_volver"
             android:layout_width="280dp"
-            android:layout_height="58dp"
+            android:layout_height="47dp"
             android:layout_gravity="center"
             android:onClick="volverMenu"
             android:text="Volver al menú"
@@ -85,15 +100,6 @@
             android:id="@+id/txt_nada5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/btn_salir2"
-            android:layout_width="280dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:onClick="Salir"
-            android:text="Salir"
-            app:backgroundTint="@android:color/holo_red_light" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,25 +3,32 @@ package com.example.finder;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.Html;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.NumberPicker;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class ModoEstatico extends AppCompatActivity {
 
@@ -36,6 +43,37 @@ public class ModoEstatico extends AppCompatActivity {
 
         time time= new time();
         time.execute();
+
+        ToggleButton button = (ToggleButton) findViewById(R.id.tg_SMS);
+        intent= new Intent(this,ServicioSMS.class);
+
+        button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+
+                            if(ActivityCompat.checkSelfPermission(
+                                    ModoEstatico.this, Manifest.permission.SEND_SMS)
+                                    != PackageManager.PERMISSION_GRANTED&& ActivityCompat.checkSelfPermission(
+                                    ModoEstatico.this,Manifest
+                                            .permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){
+                                ActivityCompat.requestPermissions(ModoEstatico.this,new String[]
+                                        { Manifest.permission.SEND_SMS,},1000);
+                            }else{
+                            };
+
+                            if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+                                startForegroundService(intent);
+                            }else {
+                                startService(intent);
+                            }
+                        } else {
+                                stopService(intent);
+                        }
+                    }
+                }
+        );
+
 
     }
 
@@ -66,7 +104,7 @@ public class ModoEstatico extends AppCompatActivity {
         protected void onPostExecute(Boolean eBoolean){
             ejecutar();
             addNotification();
-            //Toast.makeText(getApplicationContext(),"Notificaciones Activadas.",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Notificación Recibida.",Toast.LENGTH_LONG).show();
 
         }
     }
@@ -88,25 +126,11 @@ public class ModoEstatico extends AppCompatActivity {
 
     }
 
-    public void Salir(View view) {
-        //Intent intent= new Intent(getApplicationContext(),Servicio.class);
-        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-            startForegroundService(intent);
-        }else{
-            startService(intent);
-        }
-        System.exit(0);
-    }
-
     public void volverMenu(View view) {
-        System.exit(1);
+        startActivity(new Intent(getApplicationContext(), Home.class));
     }
 
     public void cambiarModo(View view) {
-
-        if(ServicioSMS.isRunning=true){
-            stopService(intent);
-        }
         startActivity(new Intent(getApplicationContext(), ModoLive.class));
 
     }

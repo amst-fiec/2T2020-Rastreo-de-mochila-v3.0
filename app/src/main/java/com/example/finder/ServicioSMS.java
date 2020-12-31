@@ -17,7 +17,7 @@ import androidx.core.app.NotificationCompat;
 
 public class ServicioSMS extends Service {
 
-    public static boolean isRunning=false;
+    //public static boolean isRunning=false;
 
     @Override
     public void onCreate() {
@@ -29,7 +29,7 @@ public class ServicioSMS extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        isRunning=true;
+        //isRunning=true;
         createNotificationChannel();
 
         Intent intent1=new Intent(this,MainActivity.class);
@@ -37,9 +37,9 @@ public class ServicioSMS extends Service {
         PendingIntent pendingIntent= PendingIntent.getActivity(this, 0, intent1,0);
 
         Notification notification= new NotificationCompat.Builder(this,"ChannelId1")
+                .setSmallIcon(R.drawable.mensaje)
                 .setContentTitle("FINDER APP")
                 .setContentText("Servicio SMS activado.")
-                .setSmallIcon(R.drawable.spot)
                 .setContentIntent(pendingIntent).build();
 
         startForeground(1,notification);
@@ -58,7 +58,7 @@ public class ServicioSMS extends Service {
 
     public void hilo(){
         try{
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -99,7 +99,7 @@ public class ServicioSMS extends Service {
 
     @Override
     public void onDestroy() {
-        isRunning=false;
+        //isRunning=false;
         stopForeground(true);
         stopSelf();
         super.onDestroy();

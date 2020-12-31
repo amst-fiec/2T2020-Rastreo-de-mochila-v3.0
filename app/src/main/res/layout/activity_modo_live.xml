@@ -13,7 +13,7 @@
     <TextView
         android:id="@+id/txt_modoEstatico"
         android:layout_width="206dp"
-        android:layout_height="80dp"
+        android:layout_height="62dp"
         android:layout_gravity="center"
         android:fontFamily="cursive"
         android:gravity="center"
@@ -27,25 +27,6 @@
         android:layout_height="289dp"
         app:srcCompat="@drawable/localizacion" />
 
-    <TextView
-        android:id="@+id/txt_nadaL"
-        android:layout_width="match_parent"
-        android:layout_height="34dp" />
-
-    <Button
-        android:id="@+id/btn_salir3"
-        android:layout_width="280dp"
-        android:layout_height="55dp"
-        android:layout_gravity="center"
-        android:onClick="Salir"
-        android:text="Salir"
-        app:backgroundTint="@android:color/holo_red_light" />
-
-    <TextView
-        android:id="@+id/txt_nadaL2"
-        android:layout_width="match_parent"
-        android:layout_height="34dp" />
-
     <Button
         android:id="@+id/btn_volver"
         android:layout_width="280dp"
@@ -54,6 +35,11 @@
         android:onClick="volverMenu"
         android:text="Volver al menú"
         app:backgroundTint="@android:color/holo_blue_dark" />
+
+    <TextView
+        android:id="@+id/txt_nadaL2"
+        android:layout_width="match_parent"
+        android:layout_height="18dp" />
 
 
 </LinearLayout>
