@@ -16,6 +16,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 public class ServicioSMS extends Service {
+
+    public static boolean isRunning=false;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -26,6 +29,7 @@ public class ServicioSMS extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        isRunning=true;
         createNotificationChannel();
 
         Intent intent1=new Intent(this,MainActivity.class);
@@ -33,7 +37,7 @@ public class ServicioSMS extends Service {
         PendingIntent pendingIntent= PendingIntent.getActivity(this, 0, intent1,0);
 
         Notification notification= new NotificationCompat.Builder(this,"ChannelId1")
-                .setContentTitle("FINDER")
+                .setContentTitle("FINDER APP")
                 .setContentText("Servicio SMS activado.")
                 .setSmallIcon(R.drawable.spot)
                 .setContentIntent(pendingIntent).build();
@@ -78,10 +82,10 @@ public class ServicioSMS extends Service {
         @Override
         protected void onPostExecute(Boolean eBoolean){
             ejecutar();
-            String myMsg = "Alerta de movimiento del dispositivo IoT.";
+            String myMsg = "Alerta de movimiento en dispositivo IoT.";
             String myNumber = "0986840420";
             EnviarSMS(myMsg,myNumber);
-            Toast.makeText(getApplicationContext(),"Mensaje Enviado",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Mensaje Enviado.",Toast.LENGTH_LONG).show();
 
         }
     }
@@ -95,6 +99,7 @@ public class ServicioSMS extends Service {
 
     @Override
     public void onDestroy() {
+        isRunning=false;
         stopForeground(true);
         stopSelf();
         super.onDestroy();
@@ -104,9 +109,8 @@ public class ServicioSMS extends Service {
         try{
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(numero, null, mensaje, null, null);
-            Toast.makeText(this, "Mensaje enviado exitosamente.", Toast.LENGTH_LONG).show();
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(), "Mensaje no enviado.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Error al enviar mensaje.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }

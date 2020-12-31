@@ -55,7 +55,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
     }
 
     public void modo(View view) {
-        final CharSequence[] items= {"Notificaciones","Mensajes SMS"};
+        final CharSequence[] items= {"Modo Estático","Modo Live"};
         AlertDialog.Builder alertaNotificaciones= new AlertDialog.Builder(this);
         alertaNotificaciones.setTitle(Html.fromHtml("<font color= '#00BCD4'>"+"Elija una opción:"+"</font>"));
 
@@ -65,7 +65,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
                 Toast mensaje= Toast.makeText(getApplicationContext(),"Opción seleccionada: "+ items[i],Toast.LENGTH_LONG);
                 mensaje.show();
 
-                if (i==1){
+                if (i==0){
                     startActivity(new Intent(getApplicationContext(), ModoEstatico.class));
                 }
                 else {
@@ -79,9 +79,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
     }
 
     public void Salir(View view) {
-        moveTaskToBack(true);
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
+        System.exit(0);
     }
 
 }

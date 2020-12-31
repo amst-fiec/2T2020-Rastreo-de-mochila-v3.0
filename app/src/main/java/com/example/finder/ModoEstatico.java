@@ -27,6 +27,7 @@ public class ModoEstatico extends AppCompatActivity {
 
     private int tiempo=0;
     private int tiempoInicial=0;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +90,23 @@ public class ModoEstatico extends AppCompatActivity {
 
     public void Salir(View view) {
         //Intent intent= new Intent(getApplicationContext(),Servicio.class);
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+            startForegroundService(intent);
+        }else{
+            startService(intent);
+        }
         System.exit(0);
     }
 
+    public void volverMenu(View view) {
+        System.exit(1);
+    }
+
     public void cambiarModo(View view) {
-        //stopService(new Intent(getApplicationContext(),Servicio.class));
+
+        if(ServicioSMS.isRunning=true){
+            stopService(intent);
+        }
         startActivity(new Intent(getApplicationContext(), ModoLive.class));
 
     }
