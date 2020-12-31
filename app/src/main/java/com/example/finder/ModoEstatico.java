@@ -4,16 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 public class ModoEstatico extends AppCompatActivity {
 
     private int tiempo=0;
+    private int tiempoInicial=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,7 @@ public class ModoEstatico extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            for (int i=1; i<=30; i++){
+            for (int i=1; i<=10; i++){
                 hilo();
             }
             return true;
@@ -61,35 +65,37 @@ public class ModoEstatico extends AppCompatActivity {
         protected void onPostExecute(Boolean eBoolean){
             ejecutar();
             addNotification();
+            //Toast.makeText(getApplicationContext(),"Notificaciones Activadas.",Toast.LENGTH_LONG).show();
 
         }
     }
 
     private void addNotification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"com.example.finder")
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+            NotificationChannel notificationChannel= new NotificationChannel("com.example.finder","com.example.finder",NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager=getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(notificationChannel);
+        }
+
+        NotificationCompat.Builder builder= new NotificationCompat.Builder(this,"com.example.finder")
                 .setSmallIcon(R.drawable.spot)
                 .setContentTitle("FINDER ALERT")
                 .setContentText("Alerta de movimiento en dispositivo IoT.")
-                .setAutoCancel(true).setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        Intent notificationIntent = new Intent(this, Home.class);
-        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        notificationIntent.putExtra("message", "This is a notification message.");
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
+                .setAutoCancel(true);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        managerCompat.notify(999,builder.build());
 
-        NotificationManager manager = (NotificationManager)
-                getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0, builder.build());
     }
 
     public void Salir(View view) {
-        moveTaskToBack(true);
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
+        //Intent intent= new Intent(getApplicationContext(),Servicio.class);
+        System.exit(0);
     }
 
     public void cambiarModo(View view) {
+        //stopService(new Intent(getApplicationContext(),Servicio.class));
         startActivity(new Intent(getApplicationContext(), ModoLive.class));
+
     }
 
     public void aggTiempo(View view){
