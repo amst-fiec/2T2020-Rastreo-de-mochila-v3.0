@@ -17,6 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Registro extends AppCompatActivity {
 
@@ -24,6 +29,13 @@ public class Registro extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
     private Button btn_registro;
+
+    String email="";
+    String password1="";
+    String password2="";
+    String telefono="";
+
+    DatabaseReference db_reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +52,7 @@ public class Registro extends AppCompatActivity {
         progressDialog=new ProgressDialog(this);
 
         btn_registro=findViewById(R.id.btn_registro);
+
         btn_registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,10 +63,10 @@ public class Registro extends AppCompatActivity {
     }
 
     private void RegistroUser(){
-        String email=emailEt.getText().toString();
-        String password1=passwordEt1.getText().toString();
-        String password2=passwordEt2.getText().toString();
-        String telefono=telefonoEt.getText().toString();
+        email=emailEt.getText().toString();
+        password1=passwordEt1.getText().toString();
+        password2=passwordEt2.getText().toString();
+        telefono=telefonoEt.getText().toString();
 
         if(TextUtils.isEmpty(email)){
             emailEt.setError("Campo vacío.");
@@ -95,10 +108,28 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(Registro.this,"Registro Exitoso.",Toast.LENGTH_LONG).show();
-                    Intent intent= new Intent(Registro.this,Home.class);
-                    startActivity(intent);
-                    finish();
+                    Map<String, Object> map= new HashMap<>();
+                    map.put("email",email);
+                    map.put("password",password1);
+                    map.put("telefono",telefono);
+
+                    String id= firebaseAuth.getCurrentUser().getUid();
+                    db_reference = FirebaseDatabase.getInstance().getReference().child("Usuario").child(id);
+                    db_reference.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task2) {
+                            if (task2.isSuccessful()) {
+                                Toast.makeText(Registro.this, "Registro Exitoso.", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(Registro.this, Home.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(Registro.this, "Error al registrar datos.", Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+                    });
+
                 }
                 else{
                     Toast.makeText(Registro.this,"Falla al registrar.",Toast.LENGTH_LONG).show();

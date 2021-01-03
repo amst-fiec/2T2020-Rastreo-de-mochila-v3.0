@@ -31,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     //Varibales públicas
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private Button btn_login;
     private ProgressDialog progressDialog;
-
     DatabaseReference db_reference;
 
     private EditText EditT_correo,EditT_contrasena;
@@ -73,41 +73,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void iniciarSesion(View view) {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
     }
-
-/*
-    public void Login(View view){
-        email =EditT_correo.getText().toString();
-        password =EditT_contrasena.getText().toString();
-
-        if(!email.isEmpty() && !password.isEmpty()){
-            login_user();
-        }else{
-            Toast.makeText(getApplicationContext(),"Complete todos los campos.",Toast.LENGTH_LONG).show();
-        }
-
-    }
-
- */
 
     private void login_user() {
-
-        /*
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    startActivity(new Intent(MainActivity.this,Home.class));
-                    finish();
-                }else{
-                    Toast.makeText(getApplicationContext(),"Compruebe los datos, error en inicio de sesión.",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-         */
 
         String email=EditT_correo.getText().toString();
         String password=EditT_contrasena.getText().toString();
@@ -172,30 +142,33 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    public void iniciarBaseDeDatos(){
-        db_reference = FirebaseDatabase.getInstance().getReference().child("Usuario");
-    }
-
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            HashMap<String, String> info_user = new HashMap<String, String>();
-            info_user.put("user_name", user.getDisplayName());
-            info_user.put("user_email", user.getEmail());
-            info_user.put("user_photo", String.valueOf(user.getPhotoUrl()));
-            info_user.put("user_id", user.getUid());
-            finish();
-            Intent intent = new Intent(this, Home.class);
-            intent.putExtra("info_user", info_user);
-            startActivity(intent);
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", user.getDisplayName());
+            map.put("email", user.getEmail());
+            map.put("photo", String.valueOf(user.getPhotoUrl()));
+
+            String id = mAuth.getCurrentUser().getUid();
+            db_reference.child("Usuario").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task2) {
+                    if (task2.isSuccessful()) {
+                        Toast.makeText(MainActivity.this, "Ingreso exitoso", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "No se pudieron crear los datos correctamente.", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
 
         } else {
             System.out.println("Sin registro.");
         }
     }
-
     public void registro (View view){
         startActivity(new Intent(MainActivity.this,Registro.class));
         finish();
     }
-
 }

@@ -75,7 +75,6 @@
         android:layout_width="300dp"
         android:layout_height="57dp"
         android:layout_gravity="center"
-        android:onClick="Login"
         android:text="Iniciar Sesión"
         app:backgroundTint="@android:color/holo_blue_dark" />
 
