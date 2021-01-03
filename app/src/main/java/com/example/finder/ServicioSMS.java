@@ -32,7 +32,7 @@ public class ServicioSMS extends Service {
         //isRunning=true;
         createNotificationChannel();
 
-        Intent intent1=new Intent(this,MainActivity.class);
+        Intent intent1=new Intent(this,ModoEstatico.class);
 
         PendingIntent pendingIntent= PendingIntent.getActivity(this, 0, intent1,0);
 

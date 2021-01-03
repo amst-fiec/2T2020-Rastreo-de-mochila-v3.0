@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
-            android:layout_height="181dp"
+            android:layout_height="147dp"
             app:srcCompat="@drawable/bolsoazul" />
 
         <TextView
@@ -30,7 +30,7 @@
         <Button
             android:id="@+id/btn_verMaletas"
             android:layout_width="280dp"
-            android:layout_height="58dp"
+            android:layout_height="47dp"
             android:layout_gravity="center"
             android:onClick="mostrarMaletas"
             android:text="Ver Mis Maletas"
@@ -43,11 +43,11 @@
 
         <TextView
             android:id="@+id/txt_texto"
-            android:layout_width="278dp"
+            android:layout_width="258dp"
             android:layout_height="38dp"
             android:gravity="center"
             android:text="Elija un dispositivo activo:"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <Spinner
             android:id="@+id/spinner"
@@ -58,7 +58,7 @@
         <Button
             android:id="@+id/btn_modo"
             android:layout_width="280dp"
-            android:layout_height="58dp"
+            android:layout_height="47dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:onClick="modo"
@@ -73,7 +73,7 @@
         <Button
             android:id="@+id/btn_salir"
             android:layout_width="280dp"
-            android:layout_height="58dp"
+            android:layout_height="47dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:onClick="Salir"

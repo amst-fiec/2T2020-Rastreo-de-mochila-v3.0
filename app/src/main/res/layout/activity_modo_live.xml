@@ -34,7 +34,7 @@
         android:layout_gravity="center"
         android:onClick="volverMenu"
         android:text="Volver al menú"
-        app:backgroundTint="@android:color/holo_blue_dark" />
+        app:backgroundTint="@android:color/holo_red_light" />
 
     <TextView
         android:id="@+id/txt_nadaL2"

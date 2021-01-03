@@ -27,30 +27,34 @@ import android.text.Html;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.NumberPicker;
+import android.widget.Switch;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 public class ModoEstatico extends AppCompatActivity {
 
     private int tiempo=0;
-    private int tiempoInicial=0;
+    //private int tiempoInicial=0;
     Intent intent;
+
+    time time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modo_estatico);
 
-        time time= new time();
+        time= new time();
         time.execute();
 
-        ToggleButton button = (ToggleButton) findViewById(R.id.tg_SMS);
+        Switch switchSMS = (Switch) findViewById(R.id.switchSMS);
         intent= new Intent(this,ServicioSMS.class);
 
-        button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        switchSMS.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked) {
+
+                            time.cancel(true);
 
                             if(ActivityCompat.checkSelfPermission(
                                     ModoEstatico.this, Manifest.permission.SEND_SMS)
@@ -86,7 +90,7 @@ public class ModoEstatico extends AppCompatActivity {
     }
 
     public void ejecutar(){
-        time time= new time();
+        time= new time();
         time.execute();
     }
 
