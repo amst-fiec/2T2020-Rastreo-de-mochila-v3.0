@@ -1,5 +1,6 @@
 package com.example.finder;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,17 +8,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 import java.util.HashMap;
 
@@ -27,6 +35,14 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     GoogleSignInClient mGoogleSignInClient;
     Button btn_login;
+
+    DatabaseReference db_reference;
+
+    private EditText EditT_correo,EditT_contrasena;
+    private String email ="";
+    private String password ="";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +53,46 @@ public class MainActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
+        EditT_correo= (EditText) findViewById(R.id.Edit_txtCorreo);
+        EditT_contrasena= (EditText) findViewById(R.id.Edit_txtContrasena);
+
     }
 
     public void iniciarSesion(View view) {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
     }
+
+
+    public void Login(View view){
+        email =EditT_correo.getText().toString();
+        password =EditT_contrasena.getText().toString();
+
+        if(!email.isEmpty() && !password.isEmpty()){
+            login_user();
+        }else{
+            Toast.makeText(getApplicationContext(),"Complete todos los campos.",Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    private void login_user() {
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    startActivity(new Intent(MainActivity.this,Home.class));
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Compruebe los datos, error en inicio de sesión.",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -73,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    public void iniciarBaseDeDatos(){
+        db_reference = FirebaseDatabase.getInstance().getReference().child("Usuario");
+    }
+
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             HashMap<String, String> info_user = new HashMap<String, String>();
@@ -86,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
 
         } else {
-            System.out.println("sin registrarse");
+            System.out.println("Sin registro.");
         }
     }
 }

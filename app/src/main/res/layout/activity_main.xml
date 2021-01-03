@@ -5,15 +5,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="35dp"
     tools:context=".MainActivity">
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="373dp"
-        android:layout_height="337dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="150px"
-        app:srcCompat="@drawable/logo2" />
 
     <TextView
         android:id="@+id/txt_"
@@ -23,19 +16,86 @@
         android:gravity="center"
         android:text="¡Bienvenido a Finder!"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="45sp"
+        android:textColor="@color/teal_700"
+        android:textSize="40sp"
         android:textStyle="bold"
         tools:text="¡Bienvenido a Finder!" />
 
+    <TextView
+        android:id="@+id/txtVacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txtCorreo"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:text="Ingrese correo electrónico:"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/Edit_txtCorreo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Correo"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/txtVacio3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txtContrasena"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:text="Ingrese contraseña:"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/Edit_txtContrasena"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Contraseña"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/txtVacio4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_iniciarSesion"
+        android:layout_width="300dp"
+        android:layout_height="57dp"
+        android:layout_gravity="center"
+        android:onClick="Login"
+        android:text="Iniciar Sesión"
+        app:backgroundTint="@android:color/holo_blue_dark" />
+
+    <TextView
+        android:id="@+id/txtVacio5"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
         android:fontFamily="sans-serif-black"
         android:onClick="iniciarSesion"
-        android:text="Iniciar sesion"
-        app:backgroundTint="@android:color/holo_blue_dark" />
+        android:text="Iniciar sesión con Google"
+        app:backgroundTint="?attr/colorAccent"
+        app:icon="@drawable/google"
+        app:iconGravity="start"
+        app:iconSize="40dp" />
 
 </LinearLayout>
