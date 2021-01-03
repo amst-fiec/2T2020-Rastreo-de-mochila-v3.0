@@ -132,11 +132,12 @@ public class ModoEstatico extends AppCompatActivity {
 
     public void volverMenu(View view) {
         startActivity(new Intent(getApplicationContext(), Home.class));
+        finish();
     }
 
     public void cambiarModo(View view) {
         startActivity(new Intent(getApplicationContext(), ModoLive.class));
-
+        finish();
     }
 
     public void aggTiempo(View view){

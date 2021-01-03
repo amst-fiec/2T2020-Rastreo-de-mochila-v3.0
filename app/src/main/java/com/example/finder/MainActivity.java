@@ -3,9 +3,12 @@ package com.example.finder;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,13 +37,12 @@ public class MainActivity extends AppCompatActivity {
     static final int GOOGLE_SIGN_IN = 123;
     FirebaseAuth mAuth;
     GoogleSignInClient mGoogleSignInClient;
-    Button btn_login;
+    private Button btn_login;
+    private ProgressDialog progressDialog;
 
     DatabaseReference db_reference;
 
     private EditText EditT_correo,EditT_contrasena;
-    private String email ="";
-    private String password ="";
 
 
     @Override
@@ -57,6 +59,16 @@ public class MainActivity extends AppCompatActivity {
 
         EditT_correo= (EditText) findViewById(R.id.Edit_txtCorreo);
         EditT_contrasena= (EditText) findViewById(R.id.Edit_txtContrasena);
+        btn_login= findViewById(R.id.btn_iniciarSesion);
+        progressDialog=new ProgressDialog(this);
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login_user();
+            }
+        });
+
 
     }
 
@@ -65,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
     }
 
-
+/*
     public void Login(View view){
         email =EditT_correo.getText().toString();
         password =EditT_contrasena.getText().toString();
@@ -78,7 +90,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+ */
+
     private void login_user() {
+
+        /*
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -90,8 +106,41 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
+         */
+
+        String email=EditT_correo.getText().toString();
+        String password=EditT_contrasena.getText().toString();
+
+        if(TextUtils.isEmpty(email)){
+            EditT_correo.setError("Campo vacío.");
+            return;
+        }
+        else if(TextUtils.isEmpty(password)){
+            EditT_contrasena.setError("Campo vacío.");
+            return;
+        }
+
+        progressDialog.setMessage("Validando...");
+        progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
+        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(MainActivity.this,"Ingreso Exitoso.",Toast.LENGTH_LONG).show();
+                    Intent intent= new Intent(MainActivity.this,Home.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else{
+                    Toast.makeText(MainActivity.this,"Falla al iniciar sesión.",Toast.LENGTH_LONG).show();
+                }
+                progressDialog.dismiss();
+            }
+        });
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -143,4 +192,10 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Sin registro.");
         }
     }
+
+    public void registro (View view){
+        startActivity(new Intent(MainActivity.this,Registro.class));
+        finish();
+    }
+
 }
