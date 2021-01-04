@@ -16,6 +16,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Home extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private String dispositivos[] = {" ","Dispositivo 1", "Dispositivo 2", "Dispositivo 3", "Dispositivo 4"};
@@ -78,8 +80,13 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         alertaModo.show();
     }
 
-    public void Salir(View view) {
-        System.exit(1);
+    public void cerrarSesion(View view){
+        FirebaseAuth.getInstance().signOut();
+        finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        Toast.makeText(this,"Sesión Finalizada.", Toast.LENGTH_LONG).show();
+        intent.putExtra("msg", "cerrarSesion");
+        startActivity(intent);
     }
 
 }

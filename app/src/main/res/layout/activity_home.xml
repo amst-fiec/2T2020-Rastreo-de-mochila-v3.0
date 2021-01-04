@@ -76,8 +76,12 @@
             android:layout_height="47dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:onClick="Salir"
-            android:text="SALIR"
-            app:backgroundTint="@android:color/holo_red_light" />
+            android:onClick="cerrarSesion"
+            android:text="cerrar sesión"
+            app:backgroundTint="@android:color/holo_red_light"
+            app:icon="@drawable/common_full_open_on_phone"
+            app:iconPadding="1dp"
+            app:iconSize="35dp" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

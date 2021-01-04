@@ -50,12 +50,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+        db_reference = FirebaseDatabase.getInstance().getReference();
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
+        Intent intent = getIntent();
+        String msg = intent.getStringExtra("msg");
+        if(msg != null){
+            if(msg.equals("cerrarSesion")){
+                cerrarSesion();
+            }
+        }
 
         EditT_correo= (EditText) findViewById(R.id.Edit_txtCorreo);
         EditT_contrasena= (EditText) findViewById(R.id.Edit_txtContrasena);
@@ -75,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
     public void iniciarSesion(View view) {
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
+    }
+
+    private void cerrarSesion() {
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> updateUI(null));
     }
 
     private void login_user() {
@@ -145,10 +157,11 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         if (user != null) {
 
-            Map<String, Object> map = new HashMap<>();
+            Map<String, String> map = new HashMap<>();
             map.put("name", user.getDisplayName());
             map.put("email", user.getEmail());
-            map.put("photo", String.valueOf(user.getPhotoUrl()));
+            map.put("telefono", user.getPhoneNumber());
+            //map.put("photo", String.valueOf(user.getPhotoUrl()));
 
             String id = mAuth.getCurrentUser().getUid();
             db_reference.child("Usuario").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -156,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task2) {
                     if (task2.isSuccessful()) {
                         Toast.makeText(MainActivity.this, "Ingreso exitoso", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this,Home.class));
+                        finish();
                     } else {
                         Toast.makeText(MainActivity.this, "No se pudieron crear los datos correctamente.", Toast.LENGTH_SHORT).show();
                     }

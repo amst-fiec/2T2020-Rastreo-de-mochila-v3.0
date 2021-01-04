@@ -43,6 +43,7 @@ public class Registro extends AppCompatActivity {
         setContentView(R.layout.activity_registro);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        db_reference = FirebaseDatabase.getInstance().getReference();
 
         emailEt=findViewById(R.id.et_correo);
         passwordEt1=findViewById(R.id.ed_password1);
@@ -108,14 +109,15 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Map<String, Object> map= new HashMap<>();
+
+                    Map<String, String> map= new HashMap<>();
                     map.put("email",email);
                     map.put("password",password1);
                     map.put("telefono",telefono);
 
-                    String id= firebaseAuth.getCurrentUser().getUid();
-                    db_reference = FirebaseDatabase.getInstance().getReference().child("Usuario").child(id);
-                    db_reference.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                    String id = firebaseAuth.getCurrentUser().getUid();
+                    db_reference.child("Usuario").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task2) {
                             if (task2.isSuccessful()) {
@@ -129,7 +131,15 @@ public class Registro extends AppCompatActivity {
                             }
                         }
                     });
+                    /*
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("message");
 
+                    myRef.setValue("Hello, World!");
+
+                    Toast.makeText(Registro.this, "Registro Exitoso.", Toast.LENGTH_LONG).show();
+
+                     */
                 }
                 else{
                     Toast.makeText(Registro.this,"Falla al registrar.",Toast.LENGTH_LONG).show();
