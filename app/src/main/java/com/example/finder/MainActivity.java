@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }
                 else{
-                    Toast.makeText(MainActivity.this,"Falla al iniciar sesión.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this,"Usuario no registrado.",Toast.LENGTH_LONG).show();
                 }
                 progressDialog.dismiss();
             }

@@ -19,12 +19,14 @@ public class ServicioSMS extends Service {
 
     //public static boolean isRunning=false;
 
+    public static tiempo tiempo;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
-        Tiempo time= new Tiempo();
-        time.execute();
+        tiempo = new tiempo();
+        tiempo.execute();
     }
 
     @Override
@@ -65,11 +67,11 @@ public class ServicioSMS extends Service {
     }
 
     public void ejecutar(){
-        Tiempo time= new Tiempo();
-        time.execute();
+        tiempo = new tiempo();
+        tiempo.execute();
     }
 
-    public class Tiempo extends AsyncTask<Void,Integer,Boolean> {
+    public class tiempo extends AsyncTask<Void,Integer,Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... voids) {

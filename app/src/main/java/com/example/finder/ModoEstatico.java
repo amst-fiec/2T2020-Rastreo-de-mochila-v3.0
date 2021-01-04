@@ -35,7 +35,6 @@ public class ModoEstatico extends AppCompatActivity {
     private int tiempo=0;
     //private int tiempoInicial=0;
     Intent intent;
-
     time time;
 
     @Override
@@ -72,7 +71,8 @@ public class ModoEstatico extends AppCompatActivity {
                                 startService(intent);
                             }
                         } else {
-                                stopService(intent);
+                            ServicioSMS.tiempo.cancel(true);
+                            stopService(intent);
                         }
                     }
                 }
