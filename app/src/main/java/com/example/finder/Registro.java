@@ -1,10 +1,15 @@
 package com.example.finder;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -54,13 +59,18 @@ public class Registro extends AppCompatActivity {
 
         btn_registro=findViewById(R.id.btn_registro);
 
-        btn_registro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RegistroUser();
-            }
-        });
+    }
 
+    public void Registro(View view) {
+        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+
+        if (null == activeNetwork || !activeNetwork.isConnected()|| !activeNetwork.isAvailable()) {
+            AlertaInternet();
+        }
+        else{
+            RegistroUser();
+        }
     }
 
     private void RegistroUser(){
@@ -131,15 +141,6 @@ public class Registro extends AppCompatActivity {
                             }
                         }
                     });
-                    /*
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference("message");
-
-                    myRef.setValue("Hello, World!");
-
-                    Toast.makeText(Registro.this, "Registro Exitoso.", Toast.LENGTH_LONG).show();
-
-                     */
                 }
                 else{
                     Toast.makeText(Registro.this,"Falla al registrar.",Toast.LENGTH_LONG).show();
@@ -152,5 +153,23 @@ public class Registro extends AppCompatActivity {
 
     private Boolean isValidEmail(CharSequence target){
         return (!TextUtils.isEmpty(target)&& Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
+
+    private void AlertaInternet(){
+        AlertDialog.Builder builder= new AlertDialog.Builder(Registro.this);
+        builder.setTitle("ALERTA")
+                .setMessage("Error de Conexion.")
+                .setIcon(R.drawable.warning)
+                .setPositiveButton("Reintentar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        recreate();
+                    }
+
+                })
+                .setCancelable(false);
+
+        AlertDialog dialog= builder.create();
+        dialog.show();
     }
 }

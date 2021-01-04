@@ -16,10 +16,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/txt_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="cursive"
+            android:gravity="center"
+            android:text="Menu Principal"
+            android:textColor="@color/teal_700"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="match_parent"
-            android:layout_height="147dp"
+            android:layout_width="292dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
             app:srcCompat="@drawable/bolsoazul" />
 
         <TextView
@@ -35,11 +52,6 @@
             android:onClick="mostrarMaletas"
             android:text="Ver Mis Maletas"
             app:backgroundTint="@android:color/holo_blue_dark" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="9dp" />
 
         <TextView
             android:id="@+id/txt_texto"

@@ -18,6 +18,7 @@
         android:fontFamily="cursive"
         android:gravity="center"
         android:text="Modo Live"
+        android:textColor="@color/teal_700"
         android:textSize="40sp"
         android:textStyle="bold" />
 
@@ -28,18 +29,27 @@
         app:srcCompat="@drawable/localizacion" />
 
     <Button
-        android:id="@+id/btn_volver"
+        android:id="@+id/btn_ubicacion"
         android:layout_width="280dp"
-        android:layout_height="58dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:onClick="volverMenu"
-        android:text="Volver al menú"
-        app:backgroundTint="@android:color/holo_red_light" />
+        android:onClick="Ubicacion"
+        android:text="OBTENER UBICACION"
+        app:backgroundTint="@android:color/holo_blue_dark" />
 
     <TextView
         android:id="@+id/txt_nadaL2"
         android:layout_width="match_parent"
         android:layout_height="18dp" />
+
+    <Button
+        android:id="@+id/btn_volver"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:onClick="volverMenu"
+        android:text="Volver al menú"
+        app:backgroundTint="@android:color/holo_red_light" />
 
 
 </LinearLayout>

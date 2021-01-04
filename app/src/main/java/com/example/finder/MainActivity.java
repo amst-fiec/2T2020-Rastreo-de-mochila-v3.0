@@ -1,15 +1,23 @@
 package com.example.finder;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -70,19 +78,32 @@ public class MainActivity extends AppCompatActivity {
         btn_login= findViewById(R.id.btn_iniciarSesion);
         progressDialog=new ProgressDialog(this);
 
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login_user();
-            }
-        });
-
-
     }
 
+    public void Login(View view) {
+        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+
+        if (null == activeNetwork || !activeNetwork.isConnected()|| !activeNetwork.isAvailable()) {
+            AlertaInternet();
+        }
+        else{
+            login_user();
+        }
+    }
+
+
     public void iniciarSesion(View view) {
+        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+
+        if (null == activeNetwork || !activeNetwork.isConnected()|| !activeNetwork.isAvailable()) {
+            AlertaInternet();
+        }
+        else{
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
+        }
     }
 
     private void cerrarSesion() {
@@ -182,8 +203,27 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Sin registro.");
         }
     }
+
     public void registro (View view){
         startActivity(new Intent(MainActivity.this,Registro.class));
         finish();
+    }
+
+    private void AlertaInternet(){
+        AlertDialog.Builder builder= new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("ALERTA")
+                .setMessage("Error de Conexion.")
+                .setIcon(R.drawable.warning)
+                .setPositiveButton("Reintentar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        recreate();
+                    }
+
+                })
+                .setCancelable(false);
+
+        AlertDialog dialog= builder.create();
+        dialog.show();
     }
 }

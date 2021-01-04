@@ -25,6 +25,7 @@
             android:fontFamily="cursive"
             android:gravity="center"
             android:text="Modo Estático"
+            android:textColor="@color/teal_700"
             android:textSize="40sp"
             android:textStyle="bold" />
 

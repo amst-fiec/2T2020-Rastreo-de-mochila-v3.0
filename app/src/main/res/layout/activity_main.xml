@@ -76,6 +76,7 @@
         android:layout_height="57dp"
         android:layout_gravity="center"
         android:text="Iniciar Sesión"
+        android:onClick="Login"
         app:backgroundTint="@android:color/holo_blue_dark" />
 
     <TextView
