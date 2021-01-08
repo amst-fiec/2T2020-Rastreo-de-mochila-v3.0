@@ -67,6 +67,8 @@
             android:layout_height="43dp"
             android:layout_gravity="center" />
 
+
+
         <Button
             android:id="@+id/btn_modo"
             android:layout_width="280dp"
@@ -76,6 +78,33 @@
             android:onClick="modo"
             android:text="Modo Aplicación"
             app:backgroundTint="@android:color/holo_blue_dark" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_texto2"
+                android:layout_width="193dp"
+                android:layout_height="38dp"
+                android:gravity="center"
+                android:text="Modo de Energía: "
+                android:textSize="16sp" />
+
+            <Switch
+                android:id="@+id/switcher"
+                android:layout_width="105dp"
+                android:layout_height="38dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="52dp"
+                android:layout_marginRight="52dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="sans-serif-condensed"
+                android:showText="true"
+                android:textOff="Pila"
+                android:textOn="Panel" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/txt_vacio"
@@ -94,6 +123,7 @@
             app:icon="@drawable/common_full_open_on_phone"
             app:iconPadding="1dp"
             app:iconSize="35dp" />
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
