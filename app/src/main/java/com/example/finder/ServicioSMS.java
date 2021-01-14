@@ -98,7 +98,6 @@ public class ServicioSMS extends Service {
 
     @Override
     public void onDestroy() {
-        //isRunning=false;
         stopForeground(true);
         stopSelf();
         super.onDestroy();
@@ -114,3 +113,4 @@ public class ServicioSMS extends Service {
         }
     }
 }
+

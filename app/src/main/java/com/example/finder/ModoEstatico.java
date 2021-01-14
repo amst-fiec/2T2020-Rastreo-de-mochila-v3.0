@@ -18,6 +18,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.text.Html;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -30,14 +31,15 @@ public class ModoEstatico extends AppCompatActivity {
     private int tiempo=0;
     Intent intent1, intent2;
     public static time time;
+    public static tiempoSMS tiempoSMS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modo_estatico);
 
-        time= new time();
-        time.execute();
+        //time= new time();
+        //time.execute();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.FOREGROUND_SERVICE}, PackageManager.PERMISSION_GRANTED);
@@ -67,14 +69,21 @@ public class ModoEstatico extends AppCompatActivity {
                             }else{
                             };
 
+                            /*
                             if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
                                 startForegroundService(intent1);
                             }else {
                                 startService(intent1);
                             }
+                             */
+
+                            tiempoSMS = new tiempoSMS();
+                            tiempoSMS.execute();
+
                         } else {
-                            ServicioSMS.tiempo.cancel(true);
-                            stopService(intent1);
+                            //ServicioSMS.tiempo.cancel(true);
+                            //stopService(intent1);
+                            tiempoSMS.cancel(true);
                         }
                     }
                 }
@@ -170,6 +179,10 @@ public class ModoEstatico extends AppCompatActivity {
                     startService(intent2);
                 }
                 Reminder.activo=true;
+
+                time= new time();
+                time.execute();
+
                 startAlarm(tiempo);
             }
         });
@@ -201,6 +214,8 @@ public class ModoEstatico extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
         alarmManager.cancel(pendingIntent);
         stopService(intent2);
+        time.cancel(true);
+        tiempoSMS.cancel(true);
         Toast.makeText(this,"Modo estático detenido.",Toast.LENGTH_LONG).show();
     }
 
@@ -211,4 +226,41 @@ public class ModoEstatico extends AppCompatActivity {
             manager.createNotificationChannel(notificationChannel);
         }
     }
+
+    public void ejecutar1(){
+        tiempoSMS = new tiempoSMS();
+        tiempoSMS.execute();
+    }
+
+    public class tiempoSMS extends AsyncTask<Void,Integer,Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            for (int i=1; i<=20; i++){
+                hilo();
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean eBoolean){
+            ejecutar1();
+            String myMsg = "Alerta de movimiento en dispositivo IoT.";
+            String myNumber = "0986840420";
+            EnviarSMS(myMsg,myNumber);
+            Toast.makeText(getApplicationContext(),"Mensaje Enviado.",Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+    public void EnviarSMS(String mensaje, String numero) {
+        try{
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(numero, null, mensaje, null, null);
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), "Error al enviar mensaje.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
 }

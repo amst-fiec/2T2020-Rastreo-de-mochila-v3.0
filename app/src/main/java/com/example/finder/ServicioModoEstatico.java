@@ -76,7 +76,6 @@ public class ServicioModoEstatico extends Service {
 
     @Override
     public void onDestroy() {
-
         stopForeground(true);
         stopSelf();
         super.onDestroy();
