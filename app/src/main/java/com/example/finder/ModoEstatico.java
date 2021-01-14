@@ -29,7 +29,7 @@ public class ModoEstatico extends AppCompatActivity {
 
     private int tiempo=0;
     Intent intent1, intent2;
-    time time;
+    public static time time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
