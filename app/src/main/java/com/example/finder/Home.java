@@ -24,10 +24,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Home extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     DatabaseReference db_reference;
+    FirebaseAuth mAuth;
     EditText tlf;
 
     private String telefono;
@@ -41,6 +43,8 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        mAuth = FirebaseAuth.getInstance();
 
         Intent intent = getIntent();
         HashMap<String, String> map = (HashMap<String, String>)intent.getSerializableExtra("map");
@@ -56,7 +60,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
 
         btn_Modo= (Button)findViewById(R.id.btn_modo);
 
-        //iniciarBaseDeDatos();
+        iniciarBaseDeDatos();
 
         if(telefono==null){
             obtenerTelefono();
@@ -65,7 +69,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
     }
 
     public void iniciarBaseDeDatos(){
-        db_reference = FirebaseDatabase.getInstance().getReference().child("Usuario");
+        db_reference = FirebaseDatabase.getInstance().getReference();//.child("Usuario");
     }
 
     @Override
@@ -130,12 +134,19 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         builder.setPositiveButton("REGISTRAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        ingresoTelefono(tlf.getText().toString());
+                        Toast.makeText(getApplicationContext(),"Registro exitoso.", Toast.LENGTH_LONG).show();
                     }
-
                 })
                 .setCancelable(false);
 
-        //AlertDialog dialog= builder.create();
         builder.show();
+    }
+
+    public void ingresoTelefono(String telefono){
+        //Map<String, String> nuevoDato = new HashMap<String, String>();
+        //nuevoDato.put("telefono", telefono);
+        DatabaseReference baseDatos = db_reference.child("Usuario");
+        baseDatos.child(mAuth.getCurrentUser().getUid()).child("telefono").setValue(telefono);
     }
 }
