@@ -27,7 +27,6 @@
         android:layout_width="279dp"
         android:layout_height="40dp"
         android:ems="10"
-        android:hint="Teléfono"
         android:inputType="phone"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

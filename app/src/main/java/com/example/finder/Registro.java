@@ -158,7 +158,7 @@ public class Registro extends AppCompatActivity {
     private void AlertaInternet(){
         AlertDialog.Builder builder= new AlertDialog.Builder(Registro.this);
         builder.setTitle("ALERTA")
-                .setMessage("Error de Conexion.")
+                .setMessage("Error de Conexión.")
                 .setIcon(R.drawable.warning)
                 .setPositiveButton("Reintentar", new DialogInterface.OnClickListener() {
                     @Override

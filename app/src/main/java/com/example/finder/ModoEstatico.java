@@ -20,13 +20,27 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.NumberPicker;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+
 public class ModoEstatico extends AppCompatActivity {
+
+    FirebaseAuth mAuth;
+    DatabaseReference db_reference;
+    String telefono;
 
     private int tiempo=0;
     Intent intent1, intent2;
@@ -40,6 +54,11 @@ public class ModoEstatico extends AppCompatActivity {
 
         //time= new time();
         //time.execute();
+
+        mAuth = FirebaseAuth.getInstance();
+
+        iniciarBaseDeDatos();
+        leerTelefono();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.FOREGROUND_SERVICE}, PackageManager.PERMISSION_GRANTED);
@@ -90,6 +109,10 @@ public class ModoEstatico extends AppCompatActivity {
         );
 
 
+    }
+
+    public void iniciarBaseDeDatos(){
+        db_reference = FirebaseDatabase.getInstance().getReference();
     }
 
     public void hilo(){
@@ -246,7 +269,7 @@ public class ModoEstatico extends AppCompatActivity {
         protected void onPostExecute(Boolean eBoolean){
             ejecutar1();
             String myMsg = "Alerta de movimiento en dispositivo IoT.";
-            String myNumber = "0986840420";
+            String myNumber = telefono;
             EnviarSMS(myMsg,myNumber);
             Toast.makeText(getApplicationContext(),"Mensaje Enviado.",Toast.LENGTH_LONG).show();
 
@@ -261,6 +284,22 @@ public class ModoEstatico extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Error al enviar mensaje.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
+    }
+
+    public void leerTelefono(){
+        db_reference.child("Usuario").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String numero = String.valueOf(dataSnapshot.child("telefono").getValue());
+                telefono=numero;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.out.println(error.toException());
+            }
+        });
+
     }
 
 }

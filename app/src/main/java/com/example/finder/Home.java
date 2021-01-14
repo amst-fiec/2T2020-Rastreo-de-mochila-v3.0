@@ -7,18 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -69,7 +65,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
     }
 
     public void iniciarBaseDeDatos(){
-        db_reference = FirebaseDatabase.getInstance().getReference();//.child("Usuario");
+        db_reference = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -135,7 +131,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ingresoTelefono(tlf.getText().toString());
-                        Toast.makeText(getApplicationContext(),"Registro exitoso.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Registro exitoso.", Toast.LENGTH_LONG).show();
                     }
                 })
                 .setCancelable(false);
@@ -144,9 +140,10 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
     }
 
     public void ingresoTelefono(String telefono){
-        //Map<String, String> nuevoDato = new HashMap<String, String>();
-        //nuevoDato.put("telefono", telefono);
+        Map<String, String> nuevoDato = new HashMap<String, String>();
+        nuevoDato.put("telefono", telefono);
         DatabaseReference baseDatos = db_reference.child("Usuario");
         baseDatos.child(mAuth.getCurrentUser().getUid()).child("telefono").setValue(telefono);
     }
+
 }
