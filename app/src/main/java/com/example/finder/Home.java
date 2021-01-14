@@ -17,8 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class Home extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+
+    DatabaseReference db_reference;
+
+    private String telefono;
 
     private String dispositivos[] = {" ","Dispositivo 1", "Dispositivo 2", "Dispositivo 3", "Dispositivo 4"};
     private String bateria [] = {"81%", "25%", "32%", "73%"};
@@ -30,6 +38,11 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        Intent intent = getIntent();
+        HashMap<String, String> map = (HashMap<String, String>)intent.getSerializableExtra("map");
+
+        telefono= map.get("telefono");
+
         Spinner Valores= findViewById(R.id.spinner);
         Valores.setOnItemSelectedListener(this);
 
@@ -38,6 +51,17 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         Valores.setAdapter(items);
 
         btn_Modo= (Button)findViewById(R.id.btn_modo);
+
+        //iniciarBaseDeDatos();
+
+        if(telefono==null){
+            obtenerTelefono();
+        }
+
+    }
+
+    public void iniciarBaseDeDatos(){
+        db_reference = FirebaseDatabase.getInstance().getReference().child("Usuario");
     }
 
     @Override
@@ -89,4 +113,20 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         startActivity(intent);
     }
 
+    private void obtenerTelefono(){
+        AlertDialog.Builder builder= new AlertDialog.Builder(Home.this);
+        builder.setTitle("Numero de telefono:")
+                .setMessage("Ingrese su numero celular.")
+                .setIcon(R.drawable.warning)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+
+                })
+                .setCancelable(false);
+
+        AlertDialog dialog= builder.create();
+        dialog.show();
+    }
 }

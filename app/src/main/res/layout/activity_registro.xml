@@ -12,7 +12,7 @@
         android:id="@+id/txt_registro"
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:fontFamily="cursive"
+        android:fontFamily="sans-serif-smallcaps"
         android:gravity="center"
         android:text="Registro"
         android:textColor="@color/teal_700"
@@ -120,8 +120,9 @@
         android:id="@+id/btn_registro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="registrarse"
         android:onClick="Registro"
+        android:text="registrarse"
+        android:textStyle="bold"
         app:backgroundTint="@android:color/holo_blue_dark" />
 
 </LinearLayout>

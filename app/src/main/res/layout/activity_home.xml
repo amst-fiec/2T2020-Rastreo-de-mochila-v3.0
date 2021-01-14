@@ -21,11 +21,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="cursive"
+            android:fontFamily="sans-serif-smallcaps"
             android:gravity="center"
-            android:text="Menu Principal"
+            android:text="Menú Principal"
             android:textColor="@color/teal_700"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView2"
@@ -51,6 +52,7 @@
             android:layout_gravity="center"
             android:onClick="mostrarMaletas"
             android:text="Ver Mis Maletas"
+            android:textStyle="bold"
             app:backgroundTint="@android:color/holo_blue_dark" />
 
         <TextView
@@ -68,7 +70,6 @@
             android:layout_gravity="center" />
 
 
-
         <Button
             android:id="@+id/btn_modo"
             android:layout_width="280dp"
@@ -77,6 +78,7 @@
             android:gravity="center"
             android:onClick="modo"
             android:text="Modo Aplicación"
+            android:textStyle="bold"
             app:backgroundTint="@android:color/holo_blue_dark" />
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -119,7 +121,8 @@
             android:gravity="center"
             android:onClick="cerrarSesion"
             android:text="cerrar sesión"
-            app:backgroundTint="@android:color/holo_red_light"
+            android:textStyle="bold"
+            app:backgroundTint="@color/teal_200"
             app:icon="@drawable/common_full_open_on_phone"
             app:iconPadding="1dp"
             app:iconSize="35dp" />

@@ -178,19 +178,24 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         if (user != null) {
 
-            Map<String, String> map = new HashMap<>();
+            HashMap<String, String> map = new HashMap<>();
             map.put("name", user.getDisplayName());
             map.put("email", user.getEmail());
             map.put("telefono", user.getPhoneNumber());
+            map.put("id", user.getUid());
             //map.put("photo", String.valueOf(user.getPhotoUrl()));
 
             String id = mAuth.getCurrentUser().getUid();
+
             db_reference.child("Usuario").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task2) {
                     if (task2.isSuccessful()) {
                         Toast.makeText(MainActivity.this, "Ingreso exitoso", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this,Home.class));
+                        Intent intent =new Intent(MainActivity.this,Home.class);
+                        intent.putExtra("map",map);
+                        startActivity(intent);
+
                         finish();
                     } else {
                         Toast.makeText(MainActivity.this, "No se pudieron crear los datos correctamente.", Toast.LENGTH_SHORT).show();

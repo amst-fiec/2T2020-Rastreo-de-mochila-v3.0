@@ -15,7 +15,7 @@
         android:layout_width="206dp"
         android:layout_height="62dp"
         android:layout_gravity="center"
-        android:fontFamily="cursive"
+        android:fontFamily="sans-serif-smallcaps"
         android:gravity="center"
         android:text="Modo Live"
         android:textColor="@color/teal_700"
@@ -35,6 +35,7 @@
         android:layout_gravity="center"
         android:onClick="Ubicacion"
         android:text="OBTENER UBICACION"
+        android:textStyle="bold"
         app:backgroundTint="@android:color/holo_blue_dark" />
 
     <TextView
@@ -49,7 +50,8 @@
         android:layout_gravity="center"
         android:onClick="volverMenu"
         android:text="Volver al menú"
-        app:backgroundTint="@android:color/holo_red_light" />
+        android:textStyle="bold"
+        app:backgroundTint="@color/teal_200" />
 
 
 </LinearLayout>
