@@ -169,6 +169,7 @@ public class ModoEstatico extends AppCompatActivity {
                 }else {
                     startService(intent2);
                 }
+                Reminder.activo=true;
                 startAlarm(tiempo);
             }
         });
@@ -205,7 +206,7 @@ public class ModoEstatico extends AppCompatActivity {
 
     private void createNotificationChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel("com.example.Finder1", "com.example.Finder1", NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel notificationChannel = new NotificationChannel("com.example.Finder1", "com.example.Finder1", NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(notificationChannel);
         }

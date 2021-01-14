@@ -9,12 +9,12 @@ import androidx.core.app.NotificationManagerCompat;
 
 public class Reminder extends BroadcastReceiver {
 
-    public static Boolean activo= true;
+    public static Boolean activo;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         NotificationCompat.Builder builder= new NotificationCompat.Builder(context,"com.example.Finder1")
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.check)
                 .setContentTitle("FINDER ALERT")
                 .setContentText("Modo Estático Desactivado.")
                 .setAutoCancel(true);

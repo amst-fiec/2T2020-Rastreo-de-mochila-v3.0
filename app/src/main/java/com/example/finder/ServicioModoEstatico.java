@@ -39,7 +39,7 @@ public class ServicioModoEstatico extends Service {
             PendingIntent pendingIntent= PendingIntent.getActivity(this, 0, intent1,0);
 
             Notification notification= new NotificationCompat.Builder(this,"ChannelId1")
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setSmallIcon(R.drawable.bolsa)
                     .setContentTitle("FINDER APP")
                     .setContentText("Modo Estático Activado.")
                     .setContentIntent(pendingIntent).build();
