@@ -1,20 +1,16 @@
 package com.example.finder;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,7 +18,6 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.text.Html;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -33,8 +28,7 @@ import android.widget.Toast;
 public class ModoEstatico extends AppCompatActivity {
 
     private int tiempo=0;
-    //private int tiempoInicial=0;
-    Intent intent;
+    Intent intent1, intent2;
     time time;
 
     @Override
@@ -45,8 +39,13 @@ public class ModoEstatico extends AppCompatActivity {
         time= new time();
         time.execute();
 
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.FOREGROUND_SERVICE}, PackageManager.PERMISSION_GRANTED);
+
+
         Switch switchSMS = (Switch) findViewById(R.id.switchSMS);
-        intent= new Intent(this,ServicioSMS.class);
+
+        intent1 = new Intent(this,ServicioSMS.class);
+        intent2= new Intent(this, ServicioModoEstatico.class);
 
         switchSMS.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -66,13 +65,13 @@ public class ModoEstatico extends AppCompatActivity {
                             };
 
                             if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-                                startForegroundService(intent);
+                                startForegroundService(intent1);
                             }else {
-                                startService(intent);
+                                startService(intent1);
                             }
                         } else {
                             ServicioSMS.tiempo.cancel(true);
-                            stopService(intent);
+                            stopService(intent1);
                         }
                     }
                 }
@@ -136,6 +135,7 @@ public class ModoEstatico extends AppCompatActivity {
     }
 
     public void cambiarModo(View view) {
+        cancelAlarm();
         startActivity(new Intent(getApplicationContext(), ModoLive.class));
         finish();
     }
@@ -147,7 +147,7 @@ public class ModoEstatico extends AppCompatActivity {
     private void numberPickerDialog(){
         NumberPicker myNumberPicker= new NumberPicker(this);
         myNumberPicker.setMaxValue(60);
-        myNumberPicker.setMinValue(1);
+        myNumberPicker.setMinValue(0);
         NumberPicker.OnValueChangeListener myValChangedListener= new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
@@ -160,8 +160,13 @@ public class ModoEstatico extends AppCompatActivity {
         alertaTiempo.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(),"Duración máxima de "+tiempo+" minutos.",Toast.LENGTH_LONG).show();
 
+                if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+                    startForegroundService(intent2);
+                }else {
+                    startService(intent2);
+                }
+                startAlarm(tiempo);
             }
         });
         alertaTiempo.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -172,5 +177,34 @@ public class ModoEstatico extends AppCompatActivity {
             }
         });
         alertaTiempo.show();
+    }
+
+
+    private void startAlarm(int tiempo2) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, Reminder.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        long time1= System.currentTimeMillis();
+        long minutos= tiempo2*60;
+        long segundos= 1000*minutos;
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time1+segundos, pendingIntent);
+        Toast.makeText(getApplicationContext(),"Duración máxima de "+tiempo+" minutos.",Toast.LENGTH_LONG).show();
+    }
+
+    private void cancelAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, ServicioModoEstatico.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        alarmManager.cancel(pendingIntent);
+        stopService(intent2);
+        Toast.makeText(this,"Modo estático detenido.",Toast.LENGTH_LONG).show();
+    }
+
+    private void createNotificationChannel(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel("com.example.Finder1", "com.example.Finder1", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(notificationChannel);
+        }
     }
 }
