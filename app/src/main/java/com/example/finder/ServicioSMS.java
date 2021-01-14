@@ -17,8 +17,6 @@ import androidx.core.app.NotificationCompat;
 
 public class ServicioSMS extends Service {
 
-    //public static boolean isRunning=false;
-
     public static tiempo tiempo;
 
     @Override
@@ -31,14 +29,13 @@ public class ServicioSMS extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //isRunning=true;
         createNotificationChannel();
 
         Intent intent1=new Intent(this,ModoEstatico.class);
 
         PendingIntent pendingIntent= PendingIntent.getActivity(this, 0, intent1,0);
 
-        Notification notification= new NotificationCompat.Builder(this,"ChannelId1")
+        Notification notification= new NotificationCompat.Builder(this,"ChannelId2")
                 .setSmallIcon(R.drawable.mensaje)
                 .setContentTitle("FINDER APP")
                 .setContentText("Servicio SMS activado.")
@@ -51,7 +48,7 @@ public class ServicioSMS extends Service {
 
     private void createNotificationChannel() {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-            NotificationChannel notificacionChannel= new NotificationChannel("ChannelId1","Foreground notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel notificacionChannel= new NotificationChannel("ChannelId2","Foreground notification SMS", NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(notificacionChannel);
         }

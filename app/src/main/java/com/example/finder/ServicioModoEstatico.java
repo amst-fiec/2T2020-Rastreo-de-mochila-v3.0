@@ -54,11 +54,8 @@ public class ServicioModoEstatico extends Service {
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (Reminder.activo.booleanValue()==false){
+                if (!Reminder.activo){
                     stopForeground(true);
-                    Toast.makeText(getApplicationContext(),"Modo Estático finalizado.",Toast.LENGTH_LONG).show();
-                }
-                else {
                 }
 
             }

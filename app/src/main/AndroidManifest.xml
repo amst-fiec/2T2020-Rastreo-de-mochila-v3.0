@@ -42,6 +42,9 @@
             android:resource="@array/preloaded_fonts" />
 
         <service android:name=".ServicioSMS" />
+        <receiver android:name=".Reminder" />
+        <service android:name=".ServicioModoEstatico" />
+
     </application>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
