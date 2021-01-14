@@ -7,10 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,6 +28,7 @@ import java.util.HashMap;
 public class Home extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     DatabaseReference db_reference;
+    EditText tlf;
 
     private String telefono;
 
@@ -115,10 +119,15 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
 
     private void obtenerTelefono(){
         AlertDialog.Builder builder= new AlertDialog.Builder(Home.this);
-        builder.setTitle("Numero de telefono:")
-                .setMessage("Ingrese su numero celular.")
-                .setIcon(R.drawable.warning)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        LayoutInflater inflater= this.getLayoutInflater();
+        builder.setTitle("DATO NO REGISTRADO").setIcon(R.drawable.tlf);
+
+        View dialogView= inflater.inflate(R.layout.dialog_telefono,null);
+        builder.setView(dialogView);
+
+        tlf= dialogView.findViewById(R.id.edit_tlf);
+
+        builder.setPositiveButton("REGISTRAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }
@@ -126,7 +135,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
                 })
                 .setCancelable(false);
 
-        AlertDialog dialog= builder.create();
-        dialog.show();
+        //AlertDialog dialog= builder.create();
+        builder.show();
     }
 }
