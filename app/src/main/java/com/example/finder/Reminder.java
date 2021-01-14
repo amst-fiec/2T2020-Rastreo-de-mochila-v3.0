@@ -13,7 +13,7 @@ public class Reminder extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        NotificationCompat.Builder builder= new NotificationCompat.Builder(context,"com.example.newNot")
+        NotificationCompat.Builder builder= new NotificationCompat.Builder(context,"com.example.Finder1")
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle("FINDER ALERT")
                 .setContentText("Modo Estático Desactivado.")

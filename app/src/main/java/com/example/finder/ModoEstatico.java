@@ -41,6 +41,7 @@ public class ModoEstatico extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.FOREGROUND_SERVICE}, PackageManager.PERMISSION_GRANTED);
 
+        createNotificationChannel();
 
         Switch switchSMS = (Switch) findViewById(R.id.switchSMS);
 
@@ -125,7 +126,7 @@ public class ModoEstatico extends AppCompatActivity {
                 .setContentText("Alerta de movimiento en dispositivo IoT.")
                 .setAutoCancel(true);
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        managerCompat.notify(999,builder.build());
+        managerCompat.notify(998,builder.build());
 
     }
 
