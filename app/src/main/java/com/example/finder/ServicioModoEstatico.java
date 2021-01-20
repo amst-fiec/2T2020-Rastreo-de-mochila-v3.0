@@ -18,6 +18,7 @@ import java.util.TimerTask;
 
 public class ServicioModoEstatico extends Service {
 
+    public static Boolean activado=false;
     private Timer t = new Timer();
 
     @Nullable
@@ -43,6 +44,8 @@ public class ServicioModoEstatico extends Service {
                     .setContentTitle("FINDER APP")
                     .setContentText("Modo Estático Activado.")
                     .setContentIntent(pendingIntent).build();
+
+            activado=true;
 
             startForeground(1,notification);
 
@@ -78,6 +81,7 @@ public class ServicioModoEstatico extends Service {
     public void onDestroy() {
         stopForeground(true);
         stopSelf();
+        activado=false;
         super.onDestroy();
     }
 

@@ -169,11 +169,12 @@ public class ModoEstatico extends AppCompatActivity {
 
     public void volverMenu(View view) {
         startActivity(new Intent(getApplicationContext(), Home.class));
-        finish();
     }
 
     public void cambiarModo(View view) {
-        cancelAlarm();
+        if(ServicioModoEstatico.activado){
+            cancelAlarm();
+        }
         startActivity(new Intent(getApplicationContext(), ModoLive.class));
         finish();
     }
@@ -241,7 +242,7 @@ public class ModoEstatico extends AppCompatActivity {
         alarmManager.cancel(pendingIntent);
         stopService(intent2);
         time.cancel(true);
-        tiempoSMS.cancel(true);
+        //tiempoSMS.cancel(true);
         Toast.makeText(this,"Modo estático detenido.",Toast.LENGTH_LONG).show();
     }
 
