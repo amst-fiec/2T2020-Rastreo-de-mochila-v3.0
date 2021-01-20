@@ -18,9 +18,9 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.SmsManager;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.NumberPicker;
@@ -34,8 +34,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-
 public class ModoEstatico extends AppCompatActivity {
 
     FirebaseAuth mAuth;
@@ -46,6 +44,12 @@ public class ModoEstatico extends AppCompatActivity {
     Intent intent1, intent2;
     public static time time;
     public static tiempoSMS tiempoSMS;
+
+    String ultimaLat="";
+    String ultimaLon;
+    String longitud;
+    String latitud;
+    String dispElegido="2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +111,7 @@ public class ModoEstatico extends AppCompatActivity {
                     }
                 }
         );
-
-
+        actulizarDatos();
     }
 
     public void iniciarBaseDeDatos(){
@@ -141,9 +144,16 @@ public class ModoEstatico extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean eBoolean){
             ejecutar();
+            verificarMov(longitud,ultimaLon,latitud,ultimaLat);
+            ultimaLon=longitud;
+            ultimaLat=latitud;
+        }
+    }
+
+    private void verificarMov(String datoLongitud,String ultimaLongitud,String datoLatitud,String ultimaLatitud){
+        if(datoLongitud!=ultimaLongitud || datoLatitud!=ultimaLatitud){
             addNotification();
             Toast.makeText(getApplicationContext(),"Notificación Recibida.",Toast.LENGTH_LONG).show();
-
         }
     }
 
@@ -291,7 +301,7 @@ public class ModoEstatico extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String numero = String.valueOf(dataSnapshot.child("telefono").getValue());
-                telefono=numero;
+                telefono =numero;
             }
 
             @Override
@@ -302,4 +312,34 @@ public class ModoEstatico extends AppCompatActivity {
 
     }
 
+    public void actulizarDatos(){
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                leerDispositivo();
+            } };
+        handler.postDelayed(runnable, 3000);
+    }
+
+
+    //Entrar a la base de datos y obtener latitud y longitud del dispositivo seleccionado
+    
+    public void leerDispositivo(){
+        db_reference.child("Dispositivo").child("Dispositivo"+dispElegido).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String longitudObt = String.valueOf(dataSnapshot.child("longitud").getValue());
+                String latitudObt = String.valueOf(dataSnapshot.child("latitud").getValue());
+
+                longitud=longitudObt;
+                latitud=latitudObt;
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.out.println(error.toException());
+            }
+        });
+
+    }
 }
