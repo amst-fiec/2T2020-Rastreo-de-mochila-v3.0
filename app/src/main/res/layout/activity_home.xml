@@ -108,6 +108,17 @@
 
         </RelativeLayout>
 
+        <Button
+            android:id="@+id/btn_barraBateria"
+            android:layout_width="280dp"
+            android:layout_height="47dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:onClick="registroBaterias"
+            android:text="Registro de Baterías"
+            android:textStyle="bold"
+            app:backgroundTint="@android:color/holo_blue_dark" />
+
         <TextView
             android:id="@+id/txt_vacio"
             android:layout_width="match_parent"

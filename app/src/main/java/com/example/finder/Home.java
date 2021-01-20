@@ -146,4 +146,9 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         baseDatos.child(mAuth.getCurrentUser().getUid()).child("telefono").setValue(telefono);
     }
 
+    public void registroBaterias(View view){
+        Intent intent = new Intent(this, RegistroBaterias.class);
+        startActivity(intent);
+    }
+
 }
