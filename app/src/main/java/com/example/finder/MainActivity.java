@@ -77,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
         EditT_contrasena= (EditText) findViewById(R.id.Edit_txtContrasena);
         btn_login= findViewById(R.id.btn_iniciarSesion);
         progressDialog=new ProgressDialog(this);
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            updateUI(firebaseUser);
+        }
 
     }
 
