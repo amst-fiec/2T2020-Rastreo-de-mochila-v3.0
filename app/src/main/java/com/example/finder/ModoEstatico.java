@@ -38,17 +38,13 @@ public class ModoEstatico extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     DatabaseReference db_reference;
-    String telefono;
 
     private int tiempo=0;
     Intent intent1, intent2;
     public static time time;
     public static tiempoSMS tiempoSMS;
 
-    String ultimaLat="";
-    String ultimaLon;
-    String longitud;
-    String latitud;
+    String telefono,ultimaLat,ultimaLon,longitud,latitud;
     String dispElegido="2";
 
     @Override
@@ -107,10 +103,7 @@ public class ModoEstatico extends AppCompatActivity {
                             //ServicioSMS.tiempo.cancel(true);
                             //stopService(intent1);
                             tiempoSMS.cancel(true);
-                        }
-                    }
-                }
-        );
+                        } } } );
         actulizarDatos();
     }
 
@@ -144,13 +137,13 @@ public class ModoEstatico extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean eBoolean){
             ejecutar();
-            verificarMov(longitud,ultimaLon,latitud,ultimaLat);
+            verificarMovNotif(longitud,ultimaLon,latitud,ultimaLat);
             ultimaLon=longitud;
             ultimaLat=latitud;
         }
     }
 
-    private void verificarMov(String datoLongitud,String ultimaLongitud,String datoLatitud,String ultimaLatitud){
+    private void verificarMovNotif(String datoLongitud, String ultimaLongitud, String datoLatitud, String ultimaLatitud){
         if(datoLongitud!=ultimaLongitud || datoLatitud!=ultimaLatitud){
             addNotification();
             Toast.makeText(getApplicationContext(),"Notificación Recibida.",Toast.LENGTH_LONG).show();
@@ -269,7 +262,7 @@ public class ModoEstatico extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            for (int i=1; i<=20; i++){
+            for (int i=1; i<=10; i++){
                 hilo();
             }
             return true;
@@ -278,16 +271,24 @@ public class ModoEstatico extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean eBoolean){
             ejecutar1();
-            String myMsg = "Alerta de movimiento en dispositivo IoT.";
-            String myNumber = telefono;
-            EnviarSMS(myMsg,myNumber);
-            Toast.makeText(getApplicationContext(),"Mensaje Enviado.",Toast.LENGTH_LONG).show();
+            //String myNumber = telefono;
+            verificarMovSMS(longitud,ultimaLon,latitud,ultimaLat,telefono);
+            ultimaLon=longitud;
+            ultimaLat=latitud;
 
         }
     }
 
-    public void EnviarSMS(String mensaje, String numero) {
+    private void verificarMovSMS(String datoLongitud,String ultimaLongitud,String datoLatitud,String ultimaLatitud,String celular){
+        if(datoLongitud!=ultimaLongitud || datoLatitud!=ultimaLatitud){
+            EnviarSMS(celular);
+            Toast.makeText(getApplicationContext(),"Mensaje Enviado.",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void EnviarSMS(String numero) {
         try{
+            String mensaje = "Alerta de movimiento en dispositivo IoT.";
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(numero, null, mensaje, null, null);
         }catch (Exception e){
@@ -324,7 +325,7 @@ public class ModoEstatico extends AppCompatActivity {
 
 
     //Entrar a la base de datos y obtener latitud y longitud del dispositivo seleccionado
-    
+
     public void leerDispositivo(){
         db_reference.child("Dispositivo").child("Dispositivo"+dispElegido).addValueEventListener(new ValueEventListener() {
             @Override
