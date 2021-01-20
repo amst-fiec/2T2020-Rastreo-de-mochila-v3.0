@@ -22,7 +22,11 @@ public class Reminder extends BroadcastReceiver {
         managerCompat.notify(999,builder.build());
 
         ModoEstatico.time.cancel(true);
-        //ModoEstatico.tiempoSMS.cancel(true);
+
+        if(ModoEstatico.enviando){
+            ModoEstatico.tiempoSMS.cancel(true);
+            ModoEstatico.enviando=false;
+        }
 
         activo= false;
     }

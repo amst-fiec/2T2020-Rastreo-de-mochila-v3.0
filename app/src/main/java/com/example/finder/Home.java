@@ -16,8 +16,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,11 +45,6 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
 
         mAuth = FirebaseAuth.getInstance();
 
-        Intent intent = getIntent();
-        HashMap<String, String> map = (HashMap<String, String>)intent.getSerializableExtra("map");
-
-        telefono= map.get("telefono");
-
         Spinner Valores= findViewById(R.id.spinner);
         Valores.setOnItemSelectedListener(this);
 
@@ -57,8 +55,9 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         btn_Modo= (Button)findViewById(R.id.btn_modo);
 
         iniciarBaseDeDatos();
+        leerTelefono();
 
-        if(telefono==null){
+        if(telefono==null) {
             obtenerTelefono();
         }
 
@@ -151,4 +150,19 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         startActivity(intent);
     }
 
+    public void leerTelefono(){
+        db_reference.child("Usuario").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String numero = String.valueOf(dataSnapshot.child("telefono").getValue());
+                telefono=numero;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.out.println(error.toException());
+            }
+        });
+
+    }
 }

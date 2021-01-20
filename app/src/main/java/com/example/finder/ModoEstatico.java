@@ -43,6 +43,7 @@ public class ModoEstatico extends AppCompatActivity {
     Intent intent1, intent2;
     public static time time;
     public static tiempoSMS tiempoSMS;
+    public static Boolean enviando=false;
 
     String telefono,ultimaLat,ultimaLon,longitud,latitud;
     String dispElegido="2";
@@ -51,9 +52,6 @@ public class ModoEstatico extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modo_estatico);
-
-        //time= new time();
-        //time.execute();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -85,23 +83,10 @@ public class ModoEstatico extends AppCompatActivity {
                                             .permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){
                                 ActivityCompat.requestPermissions(ModoEstatico.this,new String[]
                                         { Manifest.permission.SEND_SMS,},1000);
-                            }else{
-                            };
-
-                            /*
-                            if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-                                startForegroundService(intent1);
-                            }else {
-                                startService(intent1);
-                            }
-                             */
-
+                            }else{ };
                             tiempoSMS = new tiempoSMS();
                             tiempoSMS.execute();
-
                         } else {
-                            //ServicioSMS.tiempo.cancel(true);
-                            //stopService(intent1);
                             tiempoSMS.cancel(true);
                         } } } );
         actulizarDatos();
@@ -242,7 +227,9 @@ public class ModoEstatico extends AppCompatActivity {
         alarmManager.cancel(pendingIntent);
         stopService(intent2);
         time.cancel(true);
-        //tiempoSMS.cancel(true);
+        if(enviando){
+            tiempoSMS.cancel(true);
+        }
         Toast.makeText(this,"Modo estático detenido.",Toast.LENGTH_LONG).show();
     }
 
@@ -272,11 +259,10 @@ public class ModoEstatico extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean eBoolean){
             ejecutar1();
-            //String myNumber = telefono;
             verificarMovSMS(longitud,ultimaLon,latitud,ultimaLat,telefono);
             ultimaLon=longitud;
             ultimaLat=latitud;
-
+            enviando=true;
         }
     }
 
@@ -324,9 +310,7 @@ public class ModoEstatico extends AppCompatActivity {
         handler.postDelayed(runnable, 3000);
     }
 
-
     //Entrar a la base de datos y obtener latitud y longitud del dispositivo seleccionado
-
     public void leerDispositivo(){
         db_reference.child("Dispositivo").child("Dispositivo"+dispElegido).addValueEventListener(new ValueEventListener() {
             @Override
@@ -342,6 +326,6 @@ public class ModoEstatico extends AppCompatActivity {
                 System.out.println(error.toException());
             }
         });
-
     }
+
 }
