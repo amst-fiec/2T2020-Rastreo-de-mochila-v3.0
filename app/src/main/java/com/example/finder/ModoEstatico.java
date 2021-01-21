@@ -92,6 +92,8 @@ public class ModoEstatico extends AppCompatActivity {
         actulizarDatos();
     }
 
+    // se inicia base de datos
+
     public void iniciarBaseDeDatos(){
         db_reference = FirebaseDatabase.getInstance().getReference();
     }
@@ -108,6 +110,8 @@ public class ModoEstatico extends AppCompatActivity {
         time= new time();
         time.execute();
     }
+
+    // clase para verificar cada cierto tiempo la ubicacion y enviar una notificacion
 
     public class time extends AsyncTask<Void,Integer,Boolean>{
 
@@ -128,12 +132,16 @@ public class ModoEstatico extends AppCompatActivity {
         }
     }
 
+    // se comprueba si los datos de longitud y latitud son los mismos a los valores anteriores y segun eso enviar notificacion
+
     private void verificarMovNotif(String datoLongitud, String ultimaLongitud, String datoLatitud, String ultimaLatitud){
         if(datoLongitud!=ultimaLongitud || datoLatitud!=ultimaLatitud){
             addNotification();
             Toast.makeText(getApplicationContext(),"Notificación Recibida.",Toast.LENGTH_LONG).show();
         }
     }
+
+    // se crea la notificacion y su respectivo canal
 
     private void addNotification() {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
@@ -152,9 +160,13 @@ public class ModoEstatico extends AppCompatActivity {
 
     }
 
+    // metodo para regresar al menu principal
+
     public void volverMenu(View view) {
         startActivity(new Intent(getApplicationContext(), Home.class));
     }
+
+    // metodo para ir al modo live incluso antes de terminar el modo estatico
 
     public void cambiarModo(View view) {
         if(ServicioModoEstatico.activado){
@@ -164,9 +176,13 @@ public class ModoEstatico extends AppCompatActivity {
         finish();
     }
 
+    // metodo para mostrar el number picker
+
     public void aggTiempo(View view){
         numberPickerDialog();
     }
+
+    // se crea el number picker y se agregan funcionalidades a los botones ok y cancel. Ademas, se inicia el servicio de modo estatico
 
     private void numberPickerDialog(){
         NumberPicker myNumberPicker= new NumberPicker(this);
@@ -208,6 +224,7 @@ public class ModoEstatico extends AppCompatActivity {
         alertaTiempo.show();
     }
 
+    // se inicia la alarma segun el tiempo elegido en el number picker
 
     private void startAlarm(int tiempo2) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -219,6 +236,8 @@ public class ModoEstatico extends AppCompatActivity {
         alarmManager.set(AlarmManager.RTC_WAKEUP, time1+segundos, pendingIntent);
         Toast.makeText(getApplicationContext(),"Duración máxima de "+tiempo+" minutos.",Toast.LENGTH_LONG).show();
     }
+
+    // se cancela la alarma y las tareas en caso de querer terminarlas antes
 
     private void cancelAlarm() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -235,6 +254,8 @@ public class ModoEstatico extends AppCompatActivity {
         Toast.makeText(this,"Modo estático detenido.",Toast.LENGTH_LONG).show();
     }
 
+    // se crea el canal de notificacion de la notificacion que indica que se termino el modo estatico
+
     private void createNotificationChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel("com.example.Finder1", "com.example.Finder1", NotificationManager.IMPORTANCE_DEFAULT);
@@ -247,6 +268,8 @@ public class ModoEstatico extends AppCompatActivity {
         tiempoSMS = new tiempoSMS();
         tiempoSMS.execute();
     }
+
+    //clase para verificar cada cierto tiempo la ubicacion y enviar un mensaje
 
     public class tiempoSMS extends AsyncTask<Void,Integer,Boolean> {
 
@@ -268,12 +291,17 @@ public class ModoEstatico extends AppCompatActivity {
         }
     }
 
+    // se comprueba si los datos de longitud y latitud son los mismos a los valores anteriores y segun eso enviar mensajes SMS
+
+
     private void verificarMovSMS(String datoLongitud,String ultimaLongitud,String datoLatitud,String ultimaLatitud,String celular){
         if(datoLongitud!=ultimaLongitud || datoLatitud!=ultimaLatitud){
             EnviarSMS(celular);
             Toast.makeText(getApplicationContext(),"Mensaje Enviado.",Toast.LENGTH_LONG).show();
         }
     }
+
+    // metodo que envia mensaje al numero obtenido de la base de datos
 
     public void EnviarSMS(String numero) {
         try{
@@ -285,6 +313,8 @@ public class ModoEstatico extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    // metodo que obtiene el telefono del user de la base de datos
 
     public void leerTelefono(){
         db_reference.child("Usuario").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
@@ -302,6 +332,8 @@ public class ModoEstatico extends AppCompatActivity {
 
     }
 
+    // hilo que se ejecuta cada 3 segundos obteniendo lectura de datos del dispositivo
+
     public void actulizarDatos(){
         final Handler handler = new Handler();
         final Runnable runnable = new Runnable() {
@@ -312,7 +344,7 @@ public class ModoEstatico extends AppCompatActivity {
         handler.postDelayed(runnable, 3000);
     }
 
-    //Entrar a la base de datos y obtener latitud y longitud del dispositivo seleccionado
+    // metodo que permite entrar a la base de datos y obtener latitud y longitud del dispositivo seleccionado
 
     public void leerDispositivo(){
         db_reference.child("Dispositivo").child("Dispositivo"+dispElegido).addValueEventListener(new ValueEventListener() {
