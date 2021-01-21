@@ -27,6 +27,7 @@ public class ServicioModoEstatico extends Service {
         return null;
     }
 
+    // se genera la notificacion primer plano del servicio inidicando que esta activo
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -54,6 +55,8 @@ public class ServicioModoEstatico extends Service {
             e.printStackTrace();
         }
 
+        // cuando se cumple el tiempo limite del modo estatico, se elimina la notificacion en primer plano
+
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -67,6 +70,8 @@ public class ServicioModoEstatico extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
+    // se crea el canal de la notificacion en primer plano
+
     private void createNotificationChannel() {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
             NotificationChannel notificacionChannel= new NotificationChannel("ChannelId1","Foreground notification", NotificationManager.IMPORTANCE_DEFAULT);
@@ -75,6 +80,8 @@ public class ServicioModoEstatico extends Service {
         }
 
     }
+
+    // se destruye el servicio
 
     @Override
     public void onDestroy() {
