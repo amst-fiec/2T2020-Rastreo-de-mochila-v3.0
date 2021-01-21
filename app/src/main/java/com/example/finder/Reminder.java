@@ -11,6 +11,8 @@ public class Reminder extends BroadcastReceiver {
 
     public static Boolean activo;
 
+    //se crea la notificacion de que se ha terminado el tiempo de modo estatico.
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if(ServicioModoEstatico.activado){
