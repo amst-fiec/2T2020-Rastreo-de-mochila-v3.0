@@ -21,6 +21,14 @@ public class ModoLive extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), Home.class));
     }
 
+    public void irModoEstatico(View view) {
+        startActivity(new Intent(getApplicationContext(), ModoEstatico.class));
+    }
+
+    public void irSettings(View view) {
+        startActivity(new Intent(getApplicationContext(), Configuraciones.class));
+    }
+
     public void Ubicacion(View view){
         AlertaInternet();
     }

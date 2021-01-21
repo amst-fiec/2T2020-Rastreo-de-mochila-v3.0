@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_icono"
         android:supportsRtl="true"
         android:theme="@style/Theme.Finder">
-        <activity android:name=".RegistroBaterias"></activity>
+        <activity android:name=".Configuraciones"></activity>
+        <activity android:name=".RegistroBaterias" />
         <activity android:name=".Registro" />
         <activity android:name=".Splash">
             <intent-filter>
@@ -45,14 +46,11 @@
         <receiver android:name=".Reminder" />
 
         <service android:name=".ServicioModoEstatico" />
-
-        <service
-            android:name=".Services.MyFirebaseInstanceService">
+        <service android:name=".Services.MyFirebaseInstanceService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.SEND_SMS" />

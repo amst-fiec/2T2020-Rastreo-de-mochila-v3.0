@@ -347,7 +347,7 @@ public class ModoEstatico extends AppCompatActivity {
     // metodo que permite entrar a la base de datos y obtener latitud y longitud del dispositivo seleccionado
 
     public void leerDispositivo(){
-        db_reference.child("Dispositivo").child("Dispositivo"+dispElegido).addValueEventListener(new ValueEventListener() {
+        db_reference.child("Dispositivos").child(dispElegido).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String longitudObt = String.valueOf(dataSnapshot.child("longitud").getValue());

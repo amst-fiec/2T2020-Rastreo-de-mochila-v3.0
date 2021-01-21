@@ -1,57 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/fondo"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:background="#ECE8E9"
     tools:context=".ModoLive">
 
-    <TextView
-        android:id="@+id/txt_modoEstatico"
-        android:layout_width="206dp"
-        android:layout_height="62dp"
-        android:layout_gravity="center"
-        android:fontFamily="sans-serif-smallcaps"
-        android:gravity="center"
-        android:text="Modo Live"
-        android:textColor="@color/teal_700"
-        android:textSize="34sp"
-        android:textStyle="bold" />
-
-    <ImageView
-        android:id="@+id/imageView3"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="268dp"
-        app:srcCompat="@drawable/localizacion" />
+        android:layout_height="55dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#fff"
+        app:layout_constraintVertical_bias="1.0">
 
-    <Button
-        android:id="@+id/btn_ubicacion"
-        android:layout_width="280dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:onClick="Ubicacion"
-        android:text="OBTENER UBICACION"
-        android:textStyle="bold"
-        app:backgroundTint="@android:color/holo_blue_dark" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/txt_nadaL2"
-        android:layout_width="match_parent"
-        android:layout_height="18dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btn_volver"
-        android:layout_width="280dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:onClick="volverMenu"
-        android:text="Volver al menú"
-        android:textStyle="bold"
-        app:backgroundTint="@color/teal_200" />
+            <ImageView
+                android:id="@+id/imgMark"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="53dp"
+                android:onClick="irModoEstatico"
+                app:srcCompat="@drawable/ic_mark" />
+
+            <ImageView
+                android:id="@+id/imgHome"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="52dp"
+                android:onClick="volverMenu"
+                app:srcCompat="@drawable/ic_home" />
+
+            <ImageView
+                android:id="@+id/imgSet"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="40dp"
+                android:onClick="irSettings"
+                app:srcCompat="@drawable/ic_setting" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textModo"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:layout_marginHorizontal="25dp"
+                android:gravity="center"
+                android:text="Modo Estático"
+                android:textColor="@color/common_google_signin_btn_text_light_focused"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textHome"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_marginHorizontal="36dp"
+                android:gravity="center"
+                android:text="Home"
+                android:textColor="@color/common_google_signin_btn_text_light_default"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textSettings"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:layout_marginHorizontal="14dp"
+                android:gravity="center"
+                android:text="Configuración"
+                android:textColor="@color/common_google_signin_btn_text_light_default"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
