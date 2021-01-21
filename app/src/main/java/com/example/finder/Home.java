@@ -56,16 +56,20 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
 
         iniciarBaseDeDatos();
         leerTelefono();
-
+        
         if(telefono==null) {
             obtenerTelefono();
         }
 
     }
 
+    // se inicia la base de datos
+
     public void iniciarBaseDeDatos(){
         db_reference = FirebaseDatabase.getInstance().getReference();
     }
+
+    // al seleccionar un dispositivo del spinner se presenta un toast con su porcentaje de bateria
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -79,9 +83,13 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
 
     }
 
+    // metodo que permite ir a la pantalla de maletas
+
     public void mostrarMaletas(View view) {
         startActivity(new Intent(getApplicationContext(), Maletas.class));
     }
+
+    // alerta que permite elegir entre modo estatico y modo live, y dirigirse a ellas
 
     public void modo(View view) {
         final CharSequence[] items= {"Modo Estático","Modo Live"};
@@ -107,6 +115,8 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         alertaModo.show();
     }
 
+    // metodo que permite cerrar sesion de la aplicacion
+
     public void cerrarSesion(View view){
         FirebaseAuth.getInstance().signOut();
         finish();
@@ -115,6 +125,8 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         intent.putExtra("msg", "cerrarSesion");
         startActivity(intent);
     }
+
+    // en caso de no contar con un telefono registrado en gmail, se presenta una alerta que pide el numero
 
     private void obtenerTelefono(){
         AlertDialog.Builder builder= new AlertDialog.Builder(Home.this);
@@ -138,6 +150,8 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         builder.show();
     }
 
+    // en caso de no contar con un telefono registrado en gmail, se lo agrega en la base de datos
+
     public void ingresoTelefono(String telefono){
         Map<String, String> nuevoDato = new HashMap<String, String>();
         nuevoDato.put("telefono", telefono);
@@ -145,10 +159,14 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         baseDatos.child(mAuth.getCurrentUser().getUid()).child("telefono").setValue(telefono);
     }
 
+    // metodo para ir a la pantalla del registro de baterias
+
     public void registroBaterias(View view){
         Intent intent = new Intent(this, RegistroBaterias.class);
         startActivity(intent);
     }
+
+    // se obtiene el telefono de usuario desde la base de datos
 
     public void leerTelefono(){
         db_reference.child("Usuario").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {

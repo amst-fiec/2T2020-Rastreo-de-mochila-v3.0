@@ -20,6 +20,8 @@ public class Splash extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
+        // se presenta el splash por 3 segundos
+
         new Handler().postDelayed(new Runnable(){
             public void run(){
                 Intent intent = new Intent(Splash.this, MainActivity.class);
