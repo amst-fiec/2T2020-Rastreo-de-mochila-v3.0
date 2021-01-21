@@ -25,7 +25,7 @@
             android:gravity="center"
             android:text="Menú Principal"
             android:textColor="@color/teal_700"
-            android:textSize="40sp"
+            android:textSize="34sp"
             android:textStyle="bold" />
 
         <TextView
@@ -36,7 +36,7 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="292dp"
-            android:layout_height="110dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/bolsoazul" />
 
@@ -57,11 +57,12 @@
 
         <TextView
             android:id="@+id/txt_texto"
-            android:layout_width="258dp"
-            android:layout_height="38dp"
+            android:layout_width="263dp"
+            android:layout_height="33dp"
             android:gravity="center"
             android:text="Elija un dispositivo activo:"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinner"
@@ -80,17 +81,10 @@
             android:text="Modo Aplicación"
             android:textStyle="bold"
             app:backgroundTint="@android:color/holo_blue_dark" />
+
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/txt_texto2"
-                android:layout_width="193dp"
-                android:layout_height="38dp"
-                android:gravity="center"
-                android:text="Modo de Energía: "
-                android:textSize="16sp" />
+            android:layout_height="48dp">
 
             <Switch
                 android:id="@+id/switcher"
@@ -98,13 +92,22 @@
                 android:layout_height="38dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="52dp"
-                android:layout_marginRight="52dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginRight="28dp"
                 android:layout_marginBottom="16dp"
                 android:fontFamily="sans-serif-condensed"
                 android:showText="true"
                 android:textOff="Pila"
                 android:textOn="Panel" />
+
+            <TextView
+                android:id="@+id/txt_texto2"
+                android:layout_width="202dp"
+                android:layout_height="36dp"
+                android:gravity="center"
+                android:text="Modo de Energía: "
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 

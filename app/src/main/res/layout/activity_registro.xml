@@ -16,7 +16,7 @@
         android:gravity="center"
         android:text="Registro"
         android:textColor="@color/teal_700"
-        android:textSize="35sp"
+        android:textSize="34sp"
         android:textStyle="bold" />
 
     <TextView
@@ -26,37 +26,38 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="81dp"
+        android:layout_height="70dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageView_correo"
             android:layout_width="1dp"
-            android:layout_height="57dp"
-            android:layout_weight="1"
+            android:layout_height="45dp"
+            android:layout_weight="0.76"
             app:srcCompat="@android:drawable/sym_action_email" />
 
         <EditText
             android:id="@+id/et_correo"
-            android:layout_width="210dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:hint="Ingrese correo electrónico"
             android:inputType="textEmailAddress"
             android:textSize="16sp" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="81dp"
+        android:layout_height="70dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/im_password1"
             android:layout_width="1dp"
-            android:layout_height="57dp"
-            android:layout_weight="1"
+            android:layout_height="45dp"
+            android:layout_weight="0.76"
             app:srcCompat="@android:drawable/ic_lock_idle_lock" />
 
         <EditText
@@ -66,20 +67,21 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Ingrese contraseña"
+            android:textSize="16sp"
             android:inputType="textPassword" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="81dp"
+        android:layout_height="70dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/im_password2"
             android:layout_width="1dp"
-            android:layout_height="57dp"
-            android:layout_weight="1"
+            android:layout_height="45dp"
+            android:layout_weight="0.76"
             app:srcCompat="@android:drawable/ic_lock_idle_lock" />
 
         <EditText
@@ -89,20 +91,21 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Confirme contraseña"
+            android:textSize="16sp"
             android:inputType="textPassword" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="81dp"
+        android:layout_height="70dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/im_celular"
             android:layout_width="1dp"
-            android:layout_height="57dp"
-            android:layout_weight="1"
+            android:layout_height="45dp"
+            android:layout_weight="0.76"
             app:srcCompat="@android:drawable/ic_menu_call" />
 
         <EditText
@@ -112,14 +115,16 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Ingrese número de teléfono"
+            android:textSize="16sp"
             android:inputType="number" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_registro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
         android:onClick="Registro"
         android:text="registrarse"
         android:textStyle="bold"

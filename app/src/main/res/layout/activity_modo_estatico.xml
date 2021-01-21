@@ -26,7 +26,7 @@
             android:gravity="center"
             android:text="Modo Estático"
             android:textColor="@color/teal_700"
-            android:textSize="40sp"
+            android:textSize="34sp"
             android:textStyle="bold" />
 
         <TextView
@@ -37,7 +37,7 @@
         <ImageView
             android:id="@+id/img_puntero"
             android:layout_width="match_parent"
-            android:layout_height="112dp"
+            android:layout_height="87dp"
             app:srcCompat="@drawable/puntero" />
 
         <TextView
@@ -63,7 +63,7 @@
         <Switch
             android:id="@+id/switchSMS"
             android:layout_width="279dp"
-            android:layout_height="56dp"
+            android:layout_height="38dp"
             android:layout_gravity="center"
             android:fontFamily="sans-serif-black"
             android:text="NOTIFICACIONES SMS"
