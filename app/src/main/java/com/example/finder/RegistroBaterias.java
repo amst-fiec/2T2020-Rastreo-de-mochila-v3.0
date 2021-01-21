@@ -56,6 +56,8 @@ public class RegistroBaterias extends AppCompatActivity {
         this.solicitarBaterias();
     }
 
+    // ajustes visuales para el grafico de barras
+
     public void iniciarGrafico() {
         graficoBarras = findViewById(R.id.barChart);
         graficoBarras.getDescription().setEnabled(false);
@@ -70,6 +72,8 @@ public class RegistroBaterias extends AppCompatActivity {
         graficoBarras.animateY(1500);
         graficoBarras.getLegend().setEnabled(false);
     }
+
+    // se crea un archivo json con la informacion de la url de la base de datos
 
     public void solicitarBaterias(){
         String url_registros = "https://finder-fa909.firebaseio.com/Dispositivos.json";
@@ -94,6 +98,8 @@ public class RegistroBaterias extends AppCompatActivity {
                 } };
         ListaRequest.add(requestRegistros);
     }
+
+    // se presenta el porcentaje de bateria y las fechas en los contenedores
 
     private void mostrarBaterias(JSONArray baterias){
         String registroId;
@@ -138,6 +144,8 @@ public class RegistroBaterias extends AppCompatActivity {
         }
     }
 
+    // al obtener un nuevo valor en el archivo json se actualiza en el grafico
+
     private void actualizarGrafico(JSONArray baterias){
         JSONObject registro_baterias;
         String bat;
@@ -158,6 +166,8 @@ public class RegistroBaterias extends AppCompatActivity {
         System.out.println(dato_temp);
         llenarGrafico(dato_temp);
     }
+
+    // se colocan los datos de las baterias en el grafico de barras y se solicita la info a la base de datos cada 3 segundos
 
     private void llenarGrafico(ArrayList<BarEntry> dato_bat){
         BarDataSet bateriasDataSet;
@@ -186,6 +196,8 @@ public class RegistroBaterias extends AppCompatActivity {
             } };
         handler.postDelayed(runnable, 3000);
     }
+
+    // metodo que permite regresar al menu principal
 
     public void regresarHome(View view){
         startActivity(new Intent(getApplicationContext(), Home.class));
