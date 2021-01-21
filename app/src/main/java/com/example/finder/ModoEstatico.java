@@ -40,7 +40,8 @@ public class ModoEstatico extends AppCompatActivity {
     DatabaseReference db_reference;
 
     private int tiempo=0;
-    Intent intent1, intent2;
+    Intent intent;
+    public static Switch switchSMS;
     public static time time;
     public static tiempoSMS tiempoSMS;
     public static Boolean enviando=false;
@@ -64,10 +65,9 @@ public class ModoEstatico extends AppCompatActivity {
 
         createNotificationChannel();
 
-        Switch switchSMS = (Switch) findViewById(R.id.switchSMS);
+        switchSMS = findViewById(R.id.switchSMS);
 
-        intent1 = new Intent(this,ServicioSMS.class);
-        intent2= new Intent(this, ServicioModoEstatico.class);
+        intent = new Intent(this, ServicioModoEstatico.class);
 
         switchSMS.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -186,9 +186,9 @@ public class ModoEstatico extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-                    startForegroundService(intent2);
+                    startForegroundService(intent);
                 }else {
-                    startService(intent2);
+                    startService(intent);
                 }
                 Reminder.activo=true;
 
@@ -225,10 +225,12 @@ public class ModoEstatico extends AppCompatActivity {
         Intent intent = new Intent(this, ServicioModoEstatico.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
         alarmManager.cancel(pendingIntent);
-        stopService(intent2);
+        stopService(this.intent);
+        //Reminder.activo=false;
         time.cancel(true);
         if(enviando){
             tiempoSMS.cancel(true);
+            switchSMS.setChecked(false);
         }
         Toast.makeText(this,"Modo estático detenido.",Toast.LENGTH_LONG).show();
     }
@@ -311,6 +313,7 @@ public class ModoEstatico extends AppCompatActivity {
     }
 
     //Entrar a la base de datos y obtener latitud y longitud del dispositivo seleccionado
+
     public void leerDispositivo(){
         db_reference.child("Dispositivo").child("Dispositivo"+dispElegido).addValueEventListener(new ValueEventListener() {
             @Override

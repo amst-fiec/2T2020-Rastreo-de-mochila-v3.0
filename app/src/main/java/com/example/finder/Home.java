@@ -31,7 +31,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
     FirebaseAuth mAuth;
     EditText tlf;
 
-    private String telefono;
+    public static String telefono;
 
     private String dispositivos[] = {" ","Dispositivo 1", "Dispositivo 2", "Dispositivo 3", "Dispositivo 4"};
     private String bateria [] = {"81%", "25%", "32%", "73%"};

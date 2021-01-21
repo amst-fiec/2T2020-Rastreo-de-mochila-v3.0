@@ -2,8 +2,10 @@ package com.example.finder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -182,6 +184,11 @@ public class RegistroBaterias extends AppCompatActivity {
             public void run() {
                 solicitarBaterias();
             } };
-        handler.postDelayed(runnable, 3000); }
+        handler.postDelayed(runnable, 3000);
+    }
+
+    public void regresarHome(View view){
+        startActivity(new Intent(getApplicationContext(), Home.class));
+    }
 
 }

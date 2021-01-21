@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
-    android:scrollbars = "vertical"
+    android:scrollbars="vertical"
     android:padding="20dp"
     android:scrollbarStyle="insideInset">
 
@@ -18,16 +18,17 @@
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChart"
             android:layout_width="match_parent"
-            android:layout_height="348dp"></com.github.mikephil.charting.charts.BarChart>
+            android:layout_height="260dp"></com.github.mikephil.charting.charts.BarChart>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_height="50dp"
+            android:gravity="bottom|center"
             android:text="Registro de Baterias"
             android:textSize="24sp"
             android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,9 +57,21 @@
         <LinearLayout
             android:id="@+id/cont_baterias"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="138dp"
+            android:orientation="vertical">
+
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_regresoHome"
+            android:layout_width="280dp"
+            android:layout_height="47dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:onClick="regresarHome"
+            android:text="VOLVER AL MENÚ"
+            android:textStyle="bold"
+            app:backgroundTint="@color/teal_200" />
 
     </LinearLayout>
 

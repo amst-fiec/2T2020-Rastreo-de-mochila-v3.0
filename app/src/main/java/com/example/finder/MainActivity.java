@@ -185,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
             HashMap<String, String> map = new HashMap<>();
             map.put("name", user.getDisplayName());
             map.put("email", user.getEmail());
+            map.put("telefono",Home.telefono);
 
             String id = mAuth.getCurrentUser().getUid();
 

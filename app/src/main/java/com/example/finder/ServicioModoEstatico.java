@@ -19,7 +19,7 @@ import java.util.TimerTask;
 public class ServicioModoEstatico extends Service {
 
     public static Boolean activado=false;
-    private Timer t = new Timer();
+    public static Timer t = new Timer();
 
     @Nullable
     @Override
@@ -60,7 +60,6 @@ public class ServicioModoEstatico extends Service {
                 if (!Reminder.activo){
                     stopForeground(true);
                 }
-
             }
         }, 0, 2000);
 
@@ -79,9 +78,9 @@ public class ServicioModoEstatico extends Service {
 
     @Override
     public void onDestroy() {
+        activado=false;
         stopForeground(true);
         stopSelf();
-        activado=false;
         super.onDestroy();
     }
 

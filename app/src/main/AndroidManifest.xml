@@ -44,8 +44,6 @@
 
         <receiver android:name=".Reminder" />
 
-        <service android:name=".ServicioSMS" />
-
         <service android:name=".ServicioModoEstatico" />
 
         <service
