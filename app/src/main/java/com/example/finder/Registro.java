@@ -61,6 +61,8 @@ public class Registro extends AppCompatActivity {
 
     }
 
+    // se valida que exista conexion a internet para registrar al usuario o sino mostrar una alerta
+
     public void Registro(View view) {
         ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
@@ -72,6 +74,8 @@ public class Registro extends AppCompatActivity {
             RegistroUser();
         }
     }
+
+    // se valida que el usuario ingrese correctamente los datos y se envia a la base de datos
 
     private void RegistroUser(){
         email=emailEt.getText().toString();
@@ -151,9 +155,13 @@ public class Registro extends AppCompatActivity {
 
     }
 
+    // se valida que el correo tenga la estructura correcta
+
     private Boolean isValidEmail(CharSequence target){
         return (!TextUtils.isEmpty(target)&& Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
+
+    // se crea una alerta en caso de que el usuario no cuente con internet
 
     private void AlertaInternet(){
         AlertDialog.Builder builder= new AlertDialog.Builder(Registro.this);
