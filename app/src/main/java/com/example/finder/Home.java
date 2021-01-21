@@ -56,7 +56,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
 
         iniciarBaseDeDatos();
         leerTelefono();
-        
+
         if(telefono==null) {
             obtenerTelefono();
         }

@@ -84,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // se valida que exista conexion a internet para iniciar sesion a traves de correo y contrasena o sino mostrar una alerta
+
     public void Login(View view) {
         ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // se valida que exista conexion a internet para iniciar sesion a traves de google o sino mostrar una alerta
 
     public void iniciarSesion(View view) {
         ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -110,9 +113,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // metodo para cerrar sesion de google
+
     private void cerrarSesion() {
         mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> updateUI(null));
     }
+
+    //se valida que el usuario ingrese correctamente los datos y se verifica con la base de datos
 
     private void login_user() {
 
@@ -163,6 +170,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Autenticacion a traves de google
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d("TAG", "firebaseAuthWithGoogle:" + acct.getId());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(),
@@ -178,6 +187,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    // se obtiene informacion del usuario en un HashMap
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
@@ -211,10 +222,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // metodo que permite ir a la pantalla de registro
+
     public void registro (View view){
         startActivity(new Intent(MainActivity.this,Registro.class));
         finish();
     }
+
+    // se crea una alerta en caso de que el usuario no cuente con internet
 
     private void AlertaInternet(){
         AlertDialog.Builder builder= new AlertDialog.Builder(MainActivity.this);
