@@ -47,7 +47,7 @@ public class ModoEstatico extends AppCompatActivity {
     public static Boolean enviando=false;
 
     String telefono,ultimaLat,ultimaLon,longitud,latitud;
-    String dispElegido="2";
+    String dispElegido="5";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

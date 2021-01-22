@@ -33,8 +33,8 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
 
     public static String telefono;
 
-    private String dispositivos[] = {" ","Dispositivo 1", "Dispositivo 2", "Dispositivo 3", "Dispositivo 4"};
-    private String bateria [] = {"81%", "25%", "32%", "73%"};
+    private String dispositivos[] = {" ","Dispositivo 1", "Dispositivo 2", "Dispositivo 3", "Dispositivo 4", "Dispositivo 5", "Dispositivo 6"};
+    private String bateria [] = {"34%", "73%", "19%", "86%", "25%", "20%"};
 
     private Button btn_Modo;
 
@@ -81,12 +81,6 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
-    }
-
-    // metodo que permite ir a la pantalla de maletas
-
-    public void mostrarMaletas(View view) {
-        startActivity(new Intent(getApplicationContext(), Maletas.class));
     }
 
     // alerta que permite elegir entre modo estatico y modo live, y dirigirse a ellas

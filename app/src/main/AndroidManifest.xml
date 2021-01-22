@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_icono"
         android:supportsRtl="true"
         android:theme="@style/Theme.Finder">
-        <activity android:name=".Configuraciones"></activity>
         <activity android:name=".RegistroBaterias" />
         <activity android:name=".Registro" />
         <activity android:name=".Splash">
@@ -32,7 +31,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <activity android:name=".Maletas" />
         <activity android:name=".Home" />
         <activity android:name=".MainActivity" />
 
