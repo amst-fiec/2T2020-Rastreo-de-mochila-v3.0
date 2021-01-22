@@ -18,6 +18,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -61,6 +62,7 @@ public class ModoLive extends AppCompatActivity implements OnMapReadyCallback {
             return;
         }
         map = googlemap;
+
         db_reference.child("Dispositivos").child("5").addValueEventListener(
                 new ValueEventListener() {
                     @Override
@@ -75,8 +77,8 @@ public class ModoLive extends AppCompatActivity implements OnMapReadyCallback {
                         LatLng marca= new LatLng(latitud, longitud);
                         dispo= map.addMarker(new MarkerOptions()
                                 .position(marca)
-                                .title("Marker2"));
-                        // ...
+                                .title("Mochila").icon(BitmapDescriptorFactory.defaultMarker(340)));
+                        // ...new MarkerOptions().position(pos)
                     }
 
                     @Override
