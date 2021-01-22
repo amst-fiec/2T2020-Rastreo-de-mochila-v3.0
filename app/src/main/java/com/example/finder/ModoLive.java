@@ -15,8 +15,11 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -87,7 +90,7 @@ public class ModoLive extends AppCompatActivity implements OnMapReadyCallback {
 
                         latitud =  Double.parseDouble(String.valueOf(dataSnapshot.child("latitud").getValue()));
                         longitud=  Double.parseDouble(String.valueOf(dataSnapshot.child("longitud").getValue()));
-                        
+
                         LatLng marca= new LatLng(latitud, longitud);
                         locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                         if (ActivityCompat.checkSelfPermission(ModoLive.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ModoLive.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -112,11 +115,14 @@ public class ModoLive extends AppCompatActivity implements OnMapReadyCallback {
                                 * Math.cos(Math.toRadians(latitud)) * Math.cos(Math.toRadians(lat2));
                         double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
                         double distancia = (radioTierra * va2) * 1000;
-
+                        int color=120;
+                        if (distancia > Double.parseDouble(String.valueOf(dataSnapshot.child("distanciamax").getValue()))){
+                            color=60;
+                        }
 
                         dispo= map.addMarker(new MarkerOptions()
                                 .position(marca)
-                                .title(String.format("%.2f",distancia) + " m").icon(BitmapDescriptorFactory.defaultMarker(120)));
+                                .title(String.format("%.2f",distancia) + " m").icon(BitmapDescriptorFactory.defaultMarker(color)));
                         // ...new MarkerOptions().position(pos)
                     }
 
@@ -149,7 +155,41 @@ public class ModoLive extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     public void irSettings(View view) {
-        startActivity(new Intent(getApplicationContext(), Configuraciones.class));
+        numberPickerDialog();
+    }
+
+    // se crea el number picker y se agregan funcionalidades a los botones ok y cancel. Ademas, se inicia el servicio de modo estatico
+
+    private void numberPickerDialog(){
+        NumberPicker myNumberPicker= new NumberPicker(this);
+        myNumberPicker.setMaxValue(20);
+        myNumberPicker.setMinValue(0);
+        NumberPicker.OnValueChangeListener myValChangedListener= new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+
+            }
+        };
+        myNumberPicker.setOnValueChangedListener(myValChangedListener);
+        android.app.AlertDialog.Builder alertaTiempo= new android.app.AlertDialog.Builder(this).setView(myNumberPicker);
+        alertaTiempo.setTitle(Html.fromHtml("<font color= '#00BCD4'>"+"Seleccione distancia máxima en metros:"+"</font>"));
+        alertaTiempo.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                db_reference.child("Dispositivos").child("5").child("distanciamax").setValue(myNumberPicker.getValue());
+
+
+            }
+        });
+        alertaTiempo.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(),"Operación cancelada.",Toast.LENGTH_LONG).show();
+
+            }
+        });
+        alertaTiempo.show();
     }
 
     public void Ubicacion(View view){
