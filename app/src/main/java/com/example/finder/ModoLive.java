@@ -2,10 +2,13 @@ package com.example.finder;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -16,27 +19,50 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class ModoLive extends AppCompatActivity  implements OnMapReadyCallback  {
+public class ModoLive extends AppCompatActivity implements OnMapReadyCallback {
     GoogleMap map;
+    //DatabaseReference db_reference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modo_live);
+        //db_reference = FirebaseDatabase.getInstance().getReference();
+        getSupportActionBar().hide();
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync( this);
+        mapFragment.getMapAsync(this);
+
+
+
+
     }
 
 
-
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(GoogleMap googlemap) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+            return;
+        }
+        map = googlemap;
+        map.setMyLocationEnabled(true);
+
         LatLng marca= new LatLng(-2.1481404, -79.9666772);
         map.addMarker(new MarkerOptions()
                 .position(marca)
                 .title("Marker"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(marca));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(marca,17));
+
     }
 
     public void volverMenu(View view) {
