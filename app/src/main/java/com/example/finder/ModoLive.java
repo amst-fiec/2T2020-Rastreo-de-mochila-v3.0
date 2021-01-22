@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -158,7 +160,7 @@ public class ModoLive extends AppCompatActivity implements OnMapReadyCallback {
         numberPickerDialog();
     }
 
-    // se crea el number picker y se agregan funcionalidades a los botones ok y cancel. Ademas, se inicia el servicio de modo estatico
+    // se crea el number picker y se agregan funcionalidades a los botones ok y cancel.
 
     private void numberPickerDialog(){
         NumberPicker myNumberPicker= new NumberPicker(this);
@@ -192,8 +194,16 @@ public class ModoLive extends AppCompatActivity implements OnMapReadyCallback {
         alertaTiempo.show();
     }
 
-    public void Ubicacion(View view){
-        AlertaInternet();
+    public void conexionFirebase(View view) {
+        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+
+        if (null == activeNetwork || !activeNetwork.isConnected()|| !activeNetwork.isAvailable()) {
+            AlertaInternet();
+        }
+        else{
+            // agregar metodo que inicie maps
+        }
     }
 
     private void AlertaInternet(){
