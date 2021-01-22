@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -18,27 +19,32 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ModoLive extends AppCompatActivity implements OnMapReadyCallback {
     GoogleMap map;
-    //DatabaseReference db_reference;
+    DatabaseReference db_reference= FirebaseDatabase.getInstance().getReference();
+    double latitud=0;
+    double longitud=0;
+    Marker dispo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modo_live);
-        //db_reference = FirebaseDatabase.getInstance().getReference();
+
         getSupportActionBar().hide();
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
-
-
     }
+
 
 
     @Override
@@ -55,6 +61,34 @@ public class ModoLive extends AppCompatActivity implements OnMapReadyCallback {
             return;
         }
         map = googlemap;
+        db_reference.child("Dispositivos").child("5").addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get Post object and use the values to update the UI
+                        if(dispo!=null){
+                            dispo.remove();
+                        }
+
+                        latitud =  Double.parseDouble(String.valueOf(dataSnapshot.child("latitud").getValue()));
+                        longitud=  Double.parseDouble(String.valueOf(dataSnapshot.child("longitud").getValue()));
+                        LatLng marca= new LatLng(latitud, longitud);
+                        dispo= map.addMarker(new MarkerOptions()
+                                .position(marca)
+                                .title("Marker2"));
+                        // ...
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Getting Post failed, log a message
+                        Log.w("aqui", "loadPost:onCancelled", databaseError.toException());
+                        // ...
+                    }
+                }
+        );
+
+
         map.setMyLocationEnabled(true);
 
         LatLng marca= new LatLng(-2.1481404, -79.9666772);
